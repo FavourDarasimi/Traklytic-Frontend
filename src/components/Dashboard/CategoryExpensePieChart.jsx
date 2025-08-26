@@ -33,7 +33,8 @@ const CategoryExpensePieChart = () => {
           "#4C72A7 ", // Orange
           "#4C72A7 ", // Orange
         ],
-        borderWidth: 4,
+        borderRadius: 10,
+        spacing: 5,
       },
     ],
   };

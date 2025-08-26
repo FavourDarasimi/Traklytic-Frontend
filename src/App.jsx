@@ -11,7 +11,7 @@ import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <div className="bg-[#fafafa] min-h-screen">
+    <div className="bg-white min-h-screen">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<Authentication />} />
@@ -21,7 +21,7 @@ function App() {
           path="/"
           element={
             <div className="flex">
-              <div className="w-[17%] shadow-2xl min-h-screen fixed">
+              <div className="w-[17%] border-r-[1px] border-gray-200 min-h-screen fixed">
                 <SideBar />
               </div>
               <div className="w-[83%] ml-[17%] min-h-screen py-5 px-7">
