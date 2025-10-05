@@ -9,15 +9,15 @@ const Profile = () => {
   return (
     <div className="w-full  ">
       <div className="flex gap-x-5 items-center">
-        <FaRegUser size={25} />
+        <FaRegUser size={25} className="text-green-600" />
         <div>
           {" "}
-          <h1 className="text-[20px] font-medium">Profile Information</h1>
-          <h1 className="text-[13px]">
-            Update your account profile information
-          </h1>
+          <h1 className="text-[25px] font-medium">Profile Information</h1>
         </div>
       </div>
+      <h1 className="text-[14px] mt-1 text-gray-500">
+        Update your account profile information
+      </h1>
       <div className="flex items-center gap-x-5 mt-5">
         <img src={Sarah} alt="" className="rounded-full w-28 h-28 " />
         <div className="space-y-3">
@@ -110,7 +110,8 @@ const Profile = () => {
                 placeholder="Bio"
               />
             </div>
-            <button className="mt-4 text-center bg-blue-500 outline-none flex items-center gap-x-1 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500">
+            <button className="mt-4 text-center bg-green-600 outline-none flex items-center gap-x-4 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500">
+              <FiSave size={18} />
               Save Changes
             </button>
           </form>

@@ -73,7 +73,7 @@ const BudgetSettings = () => {
             </div>
 
             {/* Budget Start Date */}
-            <div>
+            <div className="flex flex-col">
               <label className="font-medium pb-1 text-[15px]">
                 Budget Start Date
               </label>
@@ -88,7 +88,7 @@ const BudgetSettings = () => {
                       InputProps={{
                         ...params.InputProps,
                         style: {
-                          height: "43px",
+                          height: "40px",
                           fontSize: "14px",
                         },
                       }}

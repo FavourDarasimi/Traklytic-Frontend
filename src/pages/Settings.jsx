@@ -4,6 +4,10 @@ import Profile from "../components/Settings/Profile";
 import BudgetSettings from "../components/Settings/BudgetSettings";
 import CategoriesSettings from "../components/Settings/CategoriesSettings";
 import { RiArrowRightSFill } from "react-icons/ri";
+import { FaRegUser } from "react-icons/fa6";
+import { FiPieChart } from "react-icons/fi";
+import { FiTarget } from "react-icons/fi";
+import SettingSections from "../components/Settings/SettingSections";
 
 const Settings = () => {
   const [section, setSection] = useState("profile");
@@ -20,57 +24,60 @@ const Settings = () => {
       <div className="flex mt-10 mx-[10%] gap-x-10">
         <div className="w-[20%] pr-5 border-r-[1px] min-h-screen border-gray-200 space-y-6">
           {/* Profile */}
-          <div className="flex items-center">
-            <div className="w-6 flex justify-center">
-              {section === "profile" && (
-                <RiArrowRightSFill size={22} className="text-green-600" />
-              )}
-            </div>
-            <h1
-              className={`text-[16px]  cursor-pointer ${
-                section === "profile" ? "font-semibold" : "text-gray-500"
-              }`}
-              onClick={() => setSection("profile")}
-            >
-              Profile
-            </h1>
-          </div>
-
-          {/* Budget */}
-          <div className="flex items-center">
-            <div className="w-6">
-              {section === "budget" && (
-                <RiArrowRightSFill size={22} className="text-green-600" />
-              )}
-            </div>{" "}
-            {/* empty placeholder for arrow */}
-            <h1
-              className={`text-[16px]  cursor-pointer ${
-                section === "budget" ? "font-semibold" : "text-gray-500"
-              }`}
-              onClick={() => setSection("budget")}
-            >
-              Budget
-            </h1>
-          </div>
+          <SettingSections
+            section_name="profile"
+            title="Profile"
+            section={section}
+            setSection={setSection}
+          />
 
           {/* Categories */}
-          <div className="flex items-center">
-            <div className="w-6">
-              {section === "categories" && (
-                <RiArrowRightSFill size={22} className="text-green-600" />
-              )}
-            </div>{" "}
-            {/* empty placeholder for arrow */}
-            <h1
-              className={`text-[16px]  cursor-pointer ${
-                section === "categories" ? "font-semibold" : "text-gray-500"
-              }`}
-              onClick={() => setSection("categories")}
-            >
-              Categories
-            </h1>
-          </div>
+          <SettingSections
+            section_name="categories"
+            title="Categories"
+            section={section}
+            setSection={setSection}
+          />
+
+          {/* Budget */}
+          <SettingSections
+            section_name="budget"
+            title="Budget"
+            section={section}
+            setSection={setSection}
+          />
+
+          {/* Notifications */}
+          <SettingSections
+            section_name="notifications"
+            title="Notifications"
+            section={section}
+            setSection={setSection}
+          />
+
+          {/* Reports & Export */}
+          <SettingSections
+            section_name="reports-export"
+            title="Reports & Export"
+            section={section}
+            setSection={setSection}
+          />
+
+          {/* Appearance */}
+          <SettingSections
+            section_name="appearance"
+            title="Appearance"
+            section={section}
+            setSection={setSection}
+          />
+
+          {/* Help & Support */}
+          <SettingSections
+            section_name="help-support"
+            title="Help & Support"
+            section={section}
+            setSection={setSection}
+          />
         </div>
         <div className="w-[80%]  space-y-10 bg-white">
           {section === "profile" && <Profile />}
