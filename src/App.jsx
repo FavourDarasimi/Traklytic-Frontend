@@ -24,7 +24,7 @@ function App() {
               <div className="w-[17%] border-r-[1px] border-gray-200 min-h-screen fixed">
                 <SideBar />
               </div>
-              <div className="w-[83%] ml-[17%] min-h-screen py-5 px-7">
+              <div className="w-[83%] ml-[17%] min-h-screen py-5 px-7 bg-[#fafafa]">
                 {/* The nested routes will render here */}
                 <Outlet />
               </div>

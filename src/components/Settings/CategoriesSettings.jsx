@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { FiPieChart } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IoAddOutline } from "react-icons/io5";
+import AddCategory from "./AddCategory";
 
 const CategoriesSettings = () => {
   const [color, setColor] = useState("#44bca2");
+  const [showCategory, setShowCategory] = useState(false);
 
   const categories = [
     { name: "Grocery", color: "#45ba12", type: "income" },
@@ -13,8 +15,13 @@ const CategoriesSettings = () => {
     { name: "Grocery", color: "#45ba12", type: "income" },
     { name: "Grocery", color: "#45ba12", type: "income" },
   ];
+
+  const addCategory = () => {
+    setShowCategory(true);
+  };
   return (
     <div className="w-full ">
+      {showCategory ? <AddCategory setShowCategory={setShowCategory} /> : ""}
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-[20px] font-medium">
@@ -24,7 +31,10 @@ const CategoriesSettings = () => {
             Manage your expense categories and customize them.
           </h1>
         </div>
-        <button className="mt-4 text-center bg-green-600 outline-none flex items-center gap-x-1 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500">
+        <button
+          className="mt-4 text-center bg-green-600 outline-none flex items-center gap-x-1 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500"
+          onClick={() => addCategory()}
+        >
           <IoAddOutline size={20} /> Add Category
         </button>
       </div>
