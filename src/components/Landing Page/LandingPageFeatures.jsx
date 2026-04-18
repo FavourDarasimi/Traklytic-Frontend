@@ -3,7 +3,7 @@ import React from "react";
 const LandingPageFeatures = ({ featureSectionRef }) => {
   return (
     <div
-      className="lg:flex xs:block justify-evenly pt-20 xs:px-5"
+      className="lg:flex xs:block justify-evenly  xs:px-5"
       ref={featureSectionRef}
     >
       <div className="">

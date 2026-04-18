@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { MdOutlineDashboard } from "react-icons/md";
 import { GrTransaction } from "react-icons/gr";
 import { MdAccountBalanceWallet, MdOutlineLogout } from "react-icons/md";
@@ -8,35 +8,53 @@ import Mark from "../assets/mark.jpg";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
+  const [active,setIsActive] = useState("dashboard")
+
+   useEffect(() => {
+      if (window.location.pathname == "/dashboard") {
+        setIsActive("dashboard");
+      }
+      else if (window.location.pathname == "/transactions") {
+        setIsActive("transactions");
+      }
+      else if (window.location.pathname == "/settings") {
+        setIsActive("settings");
+      }
+    }, []);
+
+    const switchTab = (tab) => {
+      setIsActive(tab)
+    }
+
   return (
     <div className="bg-white min-h-screen">
-      <div className="lg:text-[30px] xs:text-[20px] font-bold relative p-3">
+      <div className="lg:text-[30px] xs:text-[20px] font-bold relative pl-8 pt-5">
         Track<span className="text-green-600">lytic</span>
       </div>
-      <div className="pt-20 pl-7">
-        <ul className="flex flex-col space-y-10">
-          <Link to="/dashboard/">
-            <div className="flex gap-x-5 items-center text-[16px] font-semibold">
+      <div className="pt-20 p-3">
+        <ul className="flex flex-col space-y-5">
+          <Link to="/dashboard/" onClick={() => switchTab("dashboard")}>
+            <div className={`flex gap-x-5 items-center text-[16px] px-5 py-[14px] rounded-full  ${active == "dashboard"?"bg-green-600 text-white shadow-3xl":"bg-none"}`}>
               <MdOutlineDashboard size={20} />
               <li>Dashboard</li>
             </div>
           </Link>
-          <Link to="/transactions">
-            <div className="flex gap-x-5 items-center text-[16px] font-semibold">
+          <Link to="/transactions" onClick={() => switchTab("transactions")}>
+            <div className={`flex gap-x-5 items-center text-[16px] px-5 py-[14px] rounded-full  ${active == "transactions"?"bg-green-600 text-white shadow-3xl":"bg-none"}`}>
               <MdAccountBalanceWallet size={20} />
               <li>Transaction</li>
             </div>
           </Link>
-          <div className="flex gap-x-5 items-center text-[16px] font-semibold">
+          <div className={`flex gap-x-5 items-center text-[16px] px-5 py-[14px] rounded-full  ${active == ""?"bg-green-600 text-white shadow-3xl":"bg-none"}`}>
             <GrTransaction size={20} />
             <li>Budget & Savings</li>
           </div>
-          <div className="flex gap-x-5 items-center text-[16px] font-semibold">
+          <div className={`flex gap-x-5 items-center text-[16px] px-5 py-[14px] rounded-full  ${active == ""?"bg-green-600 text-white shadow-3xl":"bg-none"}`}>
             <IoStatsChart size={20} />
             <li>Statstics</li>
           </div>
-          <Link to="/settings/">
-            <div className="flex gap-x-5 items-center text-[16px] font-semibold">
+          <Link to="/settings/" onClick={() => switchTab("settings")}>
+            <div className={`flex gap-x-5 items-center text-[16px] px-5 py-[14px] rounded-full  ${active == "settings"?"bg-green-600 text-white shadow-3xl":"bg-none"}`}>
               <IoSettingsOutline size={20} />
               <li>Settings</li>
             </div>

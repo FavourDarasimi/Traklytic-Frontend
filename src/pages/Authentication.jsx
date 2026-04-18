@@ -17,81 +17,70 @@ const Authetication = () => {
     <div>
       <Navbar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="shadow-2xl px-10 py-6 rounded-4xl">
-          <h1 className=" pb-7 font-bold text-[25px] text-center text-green-600">
-            {authState == "signup" ? "Get Started" : "Welcome Back!"}
-          </h1>
-          <div className="flex flex-col space-y-5 w-[400px]">
+        <div className=" px-10 py-6 w-[26%]">
+          <div className="pb-7 text-center">
+            <h1 className="font-bold text-[25px]">
+              {authState == "signup" ? "Let's Get Started" : "Welcome Back!"}
+            </h1>
+            <h1 className="text-gray-600 text-[15px] pt-1">
+              {authState == "signup"
+                ? "Take control of your finances with smart expense tracking and budgeting tool"
+                : "Sign in to continue tracking your expenses"}
+            </h1>
+          </div>
+          <div className="flex flex-col space-y-5 ">
             <div
               className={`${
                 authState == "login" ? "hidden" : ""
               } flex flex-col relative`}
             >
-              <label className="text-[14px]">Username</label>
+              <label className="text-[14.5px] font-semibold">Username</label>
               <div className=" relative">
-                <FaRegUser
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                    username ? "hidden" : ""
-                  }`}
-                />
                 <input
                   type="username"
-                  className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                  placeholder="Enter your Username"
+                  className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                  placeholder="Username"
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="flex flex-col relative">
-              <label className="text-[14px]">Email</label>
+              <label className="text-[14.5px] font-semibold">Email</label>
               <div className=" relative">
-                <MdOutlineEmail
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                    email ? "hidden" : ""
-                  }`}
-                />
                 <input
                   type="email"
-                  className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                  placeholder="Enter your Email"
+                  className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                  placeholder="johndoe@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className={`${authState == "login" ? "hidden" : ""} flex gap-x-5`}
+              className={`${authState == "login" ? "hidden" : ""} flex gap-x-5 w-full`}
             >
-              <div className="flex flex-col relative">
-                <label className="text-[14px]">First Name</label>
-                <div className=" relative">
-                  <FaRegUser
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                      firtsName ? "hidden" : ""
-                    }`}
-                  />
+              <div className="flex flex-col ">
+                <label className="text-[14.5px] font-semibold">
+                  First Name
+                </label>
+                <div className=" ">
                   <input
                     type="text"
-                    className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                    placeholder="Enter your First Name"
+                    className="border-[1px] border-[#a9a9b0] rounded-xl  h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                    placeholder="John"
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col relative">
-                <label className="text-[14px]">Last Name</label>
-                <div className=" relative">
-                  <FaRegUser
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                      lastName ? "hidden" : ""
-                    }`}
-                  />
+              <div className="flex flex-col ">
+                <label className="text-[14.5px] font-semibold">Last Name</label>
+                <div className=" ">
                   <input
                     type="text"
-                    className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                    placeholder="Enter your Last Name"
+                    className="border-[1px] border-[#a9a9b0] rounded-xl  h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                    placeholder="Doe"
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
@@ -99,17 +88,12 @@ const Authetication = () => {
             </div>
 
             <div className="flex flex-col relative">
-              <label className="text-[14px]">Password</label>
+              <label className="text-[14.5px] font-semibold">Password</label>
               <div className=" relative">
-                <MdLockOutline
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                    password ? "hidden" : ""
-                  }`}
-                />
                 <input
                   type="password"
-                  className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                  placeholder="Enter your Password"
+                  className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                  placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -120,17 +104,14 @@ const Authetication = () => {
                 authState == "login" ? "hidden" : ""
               } flex flex-col relative`}
             >
-              <label className="text-[14px]">Re Password</label>
+              <label className="text-[14.5px] font-semibold">
+                Confirm Password
+              </label>
               <div className=" relative">
-                <MdLockOutline
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${
-                    repassword ? "hidden" : ""
-                  }`}
-                />
                 <input
                   type="password"
-                  className="border-b-[1px] border-b-[#a9a9b0] w-full h-[40px] placeholder:pl-10 placeholder:text-[13px] focus:border-b-2 focus:border-green-600 outline-none"
-                  placeholder="Enter your Password Again"
+                  className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                  placeholder="Password"
                   onChange={(e) => setRepassword(e.target.value)}
                 />
               </div>
@@ -139,16 +120,16 @@ const Authetication = () => {
           {authState == "signup" ? (
             ""
           ) : (
-            <h1 className="text-right pt-2 text-[13px] cursor-pointer">
+            <h1 className="text-right pt-2 text-[13px] cursor-pointer text-green-600 font-semibold">
               Forgot password?
             </h1>
           )}
           <Link to="/dashboard/">
             <button
               type="submit"
-              className="cursor-pointer bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:scale-105 duration-500 text-white w-full py-3 rounded-3xl mt-5"
+              className="cursor-pointer bg-green-600 hover:scale-105 duration-500 text-white w-full py-3 rounded-3xl mt-5"
             >
-              {authState == "signup" ? "Sign Up" : "Log In"}
+              {authState == "signup" ? "Create account" : "Log In"}
             </button>
           </Link>
           {authState == "signup" ? (
@@ -163,12 +144,12 @@ const Authetication = () => {
             </h1>
           ) : (
             <h1 className="pt-4 text-center">
-              New User?{" "}
+              New to Tracklytic?{" "}
               <span
-                className="hover:text-green-600 font-semibold cursor-pointer"
+                className="text-green-600 font-semibold cursor-pointer"
                 onClick={() => setAuthState("signup")}
               >
-                Sign Up
+                Create account
               </span>
             </h1>
           )}

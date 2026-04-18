@@ -29,11 +29,11 @@ const LandingPage = () => {
         GuideSectionRef={GuideSectionRef}
       />
       <div
-        className="lg:flex xs:block xs:w-[100%] xs:px-5 justify-center lg:pt-30 xs:pt-20"
+        className="h-screen lg:flex xs:block xs:w-[100%] xs:px-5 justify-center items-center"
         ref={homeSectionRef}
       >
-        <div className="lg:max-w-[30%] xs:w-[100%]">
-          <h1 className="lg:text-5xl  xs:text-[34px]  font-bold  lg:leading-15 xs:leading-11">
+        <div className="w-[40%]">
+          <h1 className="lg:text-6xl  xs:text-[34px]  font-bold  lg:leading-15 xs:leading-11 ">
             Take Control of Your{" "}
             <span className="text-green-600">Finances</span>
           </h1>
