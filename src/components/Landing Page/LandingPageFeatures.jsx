@@ -1,103 +1,98 @@
 import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaChartLine,
+  FaChartPie,
+  FaBell,
+  FaLock,
+  FaCamera,
+} from "react-icons/fa6";
 
-const LandingPageFeatures = ({ featureSectionRef }) => {
+export default function LandingPageFeatures() {
+  const features = [
+    {
+      icon: FaChartLine,
+      title: "Expense Tracking",
+      description: "Categorize and monitor every transaction automatically",
+    },
+    {
+      icon: FaChartPie,
+      title: "Smart Budgets",
+      description: "Set budgets and get real-time alerts when you overspend",
+    },
+    {
+      icon: FaChartLine,
+      title: "Reports & Analytics",
+      description: "Visualize spending patterns with detailed reports",
+    },
+    {
+      icon: FaCamera,
+      title: "Receipt Scanner",
+      description: "Scan receipts with AI-powered OCR technology",
+    },
+    {
+      icon: FaBell,
+      title: "Bill Reminders",
+      description: "Never miss a payment with smart notifications",
+    },
+    {
+      icon: FaLock,
+      title: "Secure & Private",
+      description: "Bank-level encryption for all your financial data",
+    },
+  ];
+
   return (
-    <div
-      className="lg:flex xs:block justify-evenly  xs:px-5"
-      ref={featureSectionRef}
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      id="features"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-white"
     >
-      <div className="">
-        <h1 className="lg:w-[460px] lg:text-[35px] xs:text-[25px] xs:text-center lg:text-left font-bold ">
-          Smarter tools for better money{" "}
-          <span className="text-green-600">management</span>
-        </h1>
-        <h1 className="lg:w-[460px] pt-5 lg:text-[16px] xs:text-[14px]">
-          With Tracklytic, managing money becomes effortless—not exhausting.
-          Simplifying every part of money management to turn financial chaos
-          into clarity
-        </h1>
-      </div>
-      <div className="flex flex-col lg:gap-y-10 xs:gap-y-7 xs:pt-10 lg:pt-0">
-        <h1 className="lg:text-[40px] xs:text-[25px] font-bold">
-          Key Features
-        </h1>
-        <div className="flex lg:flex-row xs:flex-col xs:gap-y-7 lg:gap-x-20">
-          <div className="w-fit xs:flex xs:gap-x-4 lg:block ">
-            <span className="lg:text-[40px] bg-blend-screen lg:bg-white xs:bg-gray-300 xs:h-fit xs:p-2 xs:rounded-full xs:text-[15px]">
-              📊
-            </span>
-            <div className="">
-              <h1 className="lg:text-[27px] font-medium">
-                Real-Time Expense Tracking
-              </h1>
-              <h1 className="lg:w-[75%] lg:pt-5 xs:pt-[5px] xs:text-[#6b7280] lg:text-[16px] xs:text-[13px]">
-                Log expenses on the go and see where your money goes with
-                intuitive charts
-              </h1>
-            </div>
-          </div>
-          <div className="w-fit xs:flex xs:gap-x-4 lg:block">
-            <span className="lg:text-[40px] bg-blend-screen lg:bg-white xs:bg-gray-300 xs:h-fit xs:p-2 xs:rounded-full xs:text-[15px]">
-              🗓️
-            </span>
-            <div className="">
-              <h1 className="lg:text-[27px] font-medium">
-                Smart Monthly Budgets
-              </h1>
-              <h1 className="lg:w-[75%] lg:pt-5 xs:pt-[5px] xs:text-[#6b7280] lg:text-[16px] xs:text-[13px]">
-                Set budgets for categories like food or rent, and get alerts
-                before you overspend
-              </h1>
-            </div>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 space-y-4"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Powerful Features for Smart Money Management
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Everything you need to take control of your finances is built right
+            in
+          </p>
+        </motion.div>
 
-        <div className="flex lg:flex-row xs:flex-col xs:gap-y-7 lg:gap-x-20">
-          <div className="w-fit xs:flex xs:gap-x-4 lg:block">
-            <span className="lg:text-[40px] bg-blend-screen lg:bg-white xs:bg-gray-300 xs:h-fit xs:p-2 xs:rounded-full xs:text-[15px]">
-              📲
-            </span>
-            <div className="">
-              <h1 className="lg:text-[27px] font-medium">Receipt Scanning</h1>
-              <h1 className="lg:w-[75%] lg:pt-5 xs:pt-[5px] xs:text-[#6b7280] lg:text-[16px] xs:text-[13px]">
-                Snap a photo of receipts—we’ll auto-categorize and log expenses
-                for you.
-              </h1>
-            </div>
-          </div>
-          <div className="w-fit xs:flex xs:gap-x-4 lg:block">
-            <span className="lg:text-[40px] bg-blend-screen lg:bg-white xs:bg-gray-300 xs:h-fit xs:p-2 xs:rounded-full xs:text-[15px]">
-              💡
-            </span>
-            <div className="">
-              <h1 className="lg:text-[27px] font-medium">
-                Weekly/Monthly Reports
-              </h1>
-              <h1 className="lg:w-[75%] lg:pt-5 xs:pt-[5px] xs:text-[#6b7280] lg:text-[16px] xs:text-[13px]">
-                Set budgets for categories like food or rent, and get alerts
-                before you overspend
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex">
-          <div className="w-fit xs:flex xs:gap-x-4 lg:block">
-            <span className="lg:text-[40px] bg-blend-screen lg:bg-white xs:bg-gray-300 xs:h-fit xs:p-2 xs:rounded-full xs:text-[15px]">
-              🔒
-            </span>
-            <div className="">
-              <h1 className="lg:text-[27px] font-medium">Secure & Private</h1>
-              <h1 className="lg:w-[75%] lg:pt-5 xs:pt-[5px] xs:text-[#6b7280] lg:text-[16px] xs:text-[13px]">
-                Bank-level encryption keeps your data safe. No ads, no selling
-                your info.
-              </h1>
-            </div>
-          </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all"
+              >
+                <div className="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-100 transition-colors">
+                  <Icon className="text-green-600 w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </motion.section>
   );
-};
-
-export default LandingPageFeatures;
+}
