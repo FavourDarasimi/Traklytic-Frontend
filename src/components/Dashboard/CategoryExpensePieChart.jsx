@@ -54,33 +54,33 @@ const CategoryExpensePieChart = () => {
     },
   };
   return (
-    <div className="w-fit max-w-[380px]">
-      <div className="px-6 py-5 rounded-xl bg-white border-[1px] border-[#e6e6e6] shadow-xl">
-        <h2 className="text-lg font-semibold text-card-foreground mb-5">
+    <div className="w-full max-w-full md:max-w-[380px]">
+      <div className="px-4 md:px-6 py-4 md:py-5 rounded-xl bg-white border-[1px] border-[#e6e6e6] shadow-xl">
+        <h2 className="text-base md:text-lg font-semibold text-card-foreground mb-4 md:mb-5">
           Expense Categories
         </h2>
 
-        <div className="flex gap-4">
-          <div className="w-[180px] h-[180px] flex-shrink-0">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+          <div className="w-full md:w-[140px] lg:w-[180px] h-[140px] md:h-[140px] lg:h-[180px] flex-shrink-0 mx-auto md:mx-0">
             <Doughnut data={data} options={options} />
           </div>
 
           {/* Scrollable labels container */}
           <div className="flex-1 min-w-0">
             <div
-              className="space-y-2 max-h-[180px] overflow-y-auto custom-scrollbar pr-2"
+              className="space-y-2 max-h-[140px] md:max-h-[180px] overflow-y-auto custom-scrollbar pr-2"
               style={{ maxHeight: "180px" }}
             >
               {data.labels.map((label, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 text-sm font-medium text-card-foreground"
+                  className="flex items-center gap-2 text-xs md:text-sm font-medium text-card-foreground"
                 >
                   <span
                     style={{
                       backgroundColor: data.datasets[0].backgroundColor[i],
                     }}
-                    className="w-3 h-3 rounded-full flex-shrink-0"
+                    className="w-2 md:w-3 h-2 md:h-3 rounded-full flex-shrink-0"
                   ></span>
                   <span className="truncate">{label}</span>
                 </div>
@@ -89,8 +89,8 @@ const CategoryExpensePieChart = () => {
           </div>
         </div>
 
-        <div className="text-center mt-4 pt-4 border-t border-[#e6e6e6]">
-          <p className="text-base font-medium text-card-foreground">
+        <div className="text-center mt-3 md:mt-4 pt-3 md:pt-4 border-t border-[#e6e6e6]">
+          <p className="text-sm md:text-base font-medium text-card-foreground">
             Total: <span className="font-bold">$1,000</span>
           </p>
         </div>

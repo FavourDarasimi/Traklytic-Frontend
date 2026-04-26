@@ -1,15 +1,24 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-
 import LandingPage from "./pages/LandingPage";
 import Authentication from "./pages/Authentication";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Settings from "./pages/Settings";
 import SideBar from "./components/SideBar";
+import Header from "./components/Header";
+import MobileSidebar from "./components/MobileSidebar";
+import MobileHeader from "./components/MobileHeader";
+import AddTransactionForm from "./components/AddTransactionForm";
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <Routes>
@@ -20,12 +29,34 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="flex">
-              <div className="w-[17%] border-r-[1px] border-gray-200 min-h-screen fixed">
+            <div className="flex flex-col lg:flex-row">
+              {/* Desktop Sidebar */}
+              <div className="hidden lg:block lg:w-[17%] lg:border-r-[1px] border-gray-200 h-screen lg:fixed lg:left-0 lg:top-0">
                 <SideBar />
               </div>
-              <div className="w-[83%] ml-[17%] min-h-screen py-5 px-7 bg-[#fafafa]">
-                {/* The nested routes will render here */}
+
+              {/* Mobile Sidebar */}
+              <MobileSidebar
+                isOpen={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+              />
+
+              {/* Main Content */}
+              <div className="w-full lg:w-[83%] lg:ml-[17%] min-h-screen py-4 md:py-5 px-4 md:px-7 bg-gray-50">
+                {/* Mobile Header with Hamburger Menu */}
+                <MobileHeader
+                  onMenuClick={toggleSidebar}
+                  onAddTransaction={() => setShowAddTransaction(true)}
+                />
+
+                {/* Desktop Header */}
+                <div className="hidden lg:block mb-4">
+                  <Header
+                    onAddTransaction={() => setShowAddTransaction(true)}
+                  />
+                </div>
+
+                {/* Page Content */}
                 <Outlet />
               </div>
             </div>
@@ -36,6 +67,12 @@ function App() {
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
+
+      {/* Add Transaction Form */}
+      <AddTransactionForm
+        isOpen={showAddTransaction}
+        onClose={() => setShowAddTransaction(false)}
+      />
     </div>
   );
 }

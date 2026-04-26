@@ -1,90 +1,79 @@
 import React from "react";
 import { FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 import { MdLocalGroceryStore, MdEmojiTransportation } from "react-icons/md";
-import { FaCoins } from "react-icons/fa";
+import { FaGreaterThan } from "react-icons/fa6";
+import { ChevronRight } from "lucide-react";
 
 const LatestTransactionTable = () => {
+  const transactionData = [
+    {
+      name: "Savings",
+      date_time: "September 6, 2025 12:21PM",
+      amount: 1500,
+      type: "credit",
+    },
+    {
+      name: "Savings",
+      date_time: "September 6, 2025 12:21PM",
+      amount: 1500,
+      type: "debit",
+    },
+    {
+      name: "Savings",
+      date_time: "September 6, 2025 12:21PM",
+      amount: 1500,
+      type: "debit",
+    },
+    {
+      name: "Savings",
+      date_time: "September 6, 2025 12:21PM",
+      amount: 1500,
+      type: "debit",
+    },
+    {
+      name: "Savings",
+      date_time: "September 6, 2025 12:21PM",
+      amount: 1500,
+      type: "credit",
+    },
+  ];
+  const getTypeColor = (type) => {
+    if (type == "debit") {
+      return "bg-red-600";
+    } else if (type == "credit") {
+      return "bg-green-600";
+    }
+  };
   return (
-    <div className="px-7 py-5  w-[100%] h-fit text-wrap rounded-xl bg-white border-[1px] border-[#e6e6e6] shadow-xl">
-      <h1 className="text-[19px] font-semibold">Recents Transactions</h1>
-      <div className="mt-5 space-y-5">
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">Valerie</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
+    <div className="px-4 md:px-7 py-4 md:py-5 w-full h-fit text-wrap rounded-xl bg-white border-[1px] border-[#e6e6e6] shadow-xl">
+      <h1 className="text-base md:text-[19px] font-semibold">
+        Recent Transactions
+      </h1>
+      <div className="border-t border-t-[#dedddb] my-3" />
+      <div className="space-y-5">
+        {transactionData.map((transaction) => (
+          <div className="flex justify-between items-center">
+            <div className="flex gap-[14px] items-center">
+              <div
+                className={`w-3 h-3 rounded-full ${getTypeColor(transaction.type)}`}
+              />
+              <div>
+                <h1 className="text-[17px] font-semibold">
+                  {transaction.name}
+                </h1>
+                <h3 className="text-[13px] text-gray-600 font-medium">
+                  {transaction.date_time}
+                </h3>
+              </div>
             </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Grocery
-            </h1>
-          </div>
-          <h1 className="text-red-600 font-medium text-[18px]">-$100</h1>
-        </div>
-
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">Microsoft</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
+            <div className="flex items-center font-semibold gap-1 ">
+              <h1 className="text-[19px]">
+                {transaction.type == "debit" ? "-" : "+"}₦{transaction.amount}
+              </h1>
+              <ChevronRight className="hover:underline hover:animate-pulse" />
             </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Salary
-            </h1>
           </div>
-          <h1 className="text-green-600 font-medium text-[18px]">+$1000</h1>
-        </div>
-
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">FUT Microfinance Bank</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
-            </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Transportation
-            </h1>
-          </div>
-          <h1 className="text-green-600 font-medium text-[18px]">-$100</h1>
-        </div>
-
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">FUT Microfinance Bank</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
-            </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Transportation
-            </h1>
-          </div>
-          <h1 className="text-green-600 font-medium text-[18px]">-$100</h1>
-        </div>
-
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">FUT Microfinance Bank</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
-            </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Transportation
-            </h1>
-          </div>
-          <h1 className="text-green-600 font-medium text-[18px]">-$100</h1>
-        </div>
-
-        <div className="flex justify-between items-center border-[1px] border-[#e6e6e6] p-3 rounded-xl">
-          <div className="flex items-start gap-x-4">
-            <div>
-              <h1 className="text-[16px] font-medium">FUT Microfinance Bank</h1>
-              <h1 className="text-[13px] ">5:12pm</h1>
-            </div>
-            <h1 className="text-[12px]  bg-[#e6e6e6] px-2 py-[2px] rounded-xl">
-              Transportation
-            </h1>
-          </div>
-          <h1 className="text-green-600 font-medium text-[18px]">-$100</h1>
-        </div>
+        ))}
       </div>
     </div>
   );
