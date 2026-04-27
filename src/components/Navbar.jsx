@@ -24,9 +24,9 @@ const Navbar = ({
   }, []);
 
   return (
-    <nav className="lg:py-4 lg:px-16 xs:py-3 xs:px-5 sticky top-0 left-0 w-full z-50 bg-white lg:shadow-md">
+    <nav className="py-3 px-4 sm:py-4 sm:px-8 lg:py-4 lg:px-16 sticky top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="flex justify-between items-center">
-        <div className="lg:text-[27px] xs:text-[20px] font-bold">
+        <div className="text-[20px] sm:text-[22px] lg:text-[27px] font-bold">
           Track<span className="text-green-600">lytic</span>
         </div>
 
@@ -82,7 +82,7 @@ const Navbar = ({
 
         {/* Mobile Menu Button */}
         <button
-          className="xs:block lg:hidden text-gray-700 focus:outline-none"
+          className="block lg:hidden text-gray-700 focus:outline-none"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >

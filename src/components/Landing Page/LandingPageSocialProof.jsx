@@ -10,7 +10,7 @@ export default function LandingPageSocialProof() {
       viewport={{ once: true }}
       className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-100"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl xl:max-w-[1500px] mx-auto">
         <div className="grid md:grid-cols-4 gap-8 text-center">
           <motion.div whileHover={{ y: -5 }} className="space-y-2">
             <div className="text-4xl font-bold text-green-600">10,000+</div>

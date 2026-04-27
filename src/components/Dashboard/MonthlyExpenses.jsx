@@ -20,7 +20,7 @@ const MonthlyExpenses = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 lg:gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 xl:gap-4">
         {expenses.map((expense, index) => (
           <div
             key={index}
@@ -29,7 +29,7 @@ const MonthlyExpenses = () => {
             <p className="text-xs text-gray-600 font-medium mb-2">
               {expense.name}
             </p>
-            <p className="text-sm md:text-base font-bold text-gray-900">
+            <p className="text-sm md:text-base font-semibold text-gray-900">
               {expense.amount}
             </p>
           </div>

@@ -5,78 +5,75 @@ import { IoAddOutline } from "react-icons/io5";
 import AddCategory from "./AddCategory";
 
 const CategoriesSettings = () => {
-  const [color, setColor] = useState("#44bca2");
   const [showCategory, setShowCategory] = useState(false);
+  const [categories, setCategories] = useState([
+    { name: "Grocery", color: "#45ba12", type: "income" },
+    { name: "Transport", color: "#3b82f6", type: "expense" },
+    { name: "Utilities", color: "#f59e0b", type: "expense" },
+    { name: "Dining", color: "#ef4444", type: "expense" },
+    { name: "Salary", color: "#10b981", type: "income" },
+  ]);
 
-  const categories = [
-    { name: "Grocery", color: "#45ba12", type: "income" },
-    { name: "Grocery", color: "#45ba12", type: "income" },
-    { name: "Grocery", color: "#45ba12", type: "income" },
-    { name: "Grocery", color: "#45ba12", type: "income" },
-    { name: "Grocery", color: "#45ba12", type: "income" },
-  ];
-
-  const addCategory = () => {
-    setShowCategory(true);
-  };
   return (
-    <div className="w-full ">
-      {showCategory ? <AddCategory setShowCategory={setShowCategory} /> : ""}
-      <div className="flex justify-between items-start">
+    <div className="w-full">
+      {showCategory && <AddCategory setShowCategory={setShowCategory} />}
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
-          <h1 className="text-[20px] font-medium">
-            Default Expense Categories
+          <h1 className="text-[20px] md:text-[22px] font-semibold">
+            Expense Categories
           </h1>
-          <h1 className="text-[14px] mt-1 text-gray-500 bg-red-">
+          <p className="text-sm text-gray-500 mt-0.5">
             Manage your expense categories and customize them.
-          </h1>
+          </p>
         </div>
         <button
-          className="mt-4 text-center bg-green-600 outline-none flex items-center gap-x-1 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500"
-          onClick={() => addCategory()}
+          className="flex items-center gap-x-1.5 bg-green-600 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-green-700 transition-colors whitespace-nowrap flex-shrink-0"
+          onClick={() => setShowCategory(true)}
         >
-          <IoAddOutline size={20} /> Add Category
+          <IoAddOutline size={18} />
+          Add Category
         </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-8 mt-5">
-        {/* Categories List */}
+      {/* Category Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {categories.map((category, index) => (
-          <div className="flex justify-between items-center w-[25%] p-3 rounded-xl bg-white border-[1px] border-[#e6e6e6] hover:shadow-xl hover:scale-105 transition-all duration-500">
-            <div>
-              <h1 className="text-170px] font-semibold">{category.name}</h1>
-              <div className="flex gap-3 mt-3">
-                <input
-                  type="color"
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                  className="rounded-full"
-                />
-                <div className="text-[14px] text-gray-500">{color}</div>
-                <div
-                  className=" rounded-full shadow"
-                  style={{ backgroundColor: color }}
-                ></div>
+          <div
+            key={index}
+            className="flex justify-between items-center p-4 rounded-xl bg-white border border-gray-200 hover:shadow-md hover:scale-[1.02] transition-all duration-300"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              {/* Color swatch */}
+              <div
+                className="w-8 h-8 rounded-lg flex-shrink-0 border border-black/10"
+                style={{ backgroundColor: category.color }}
+              />
+              <div className="min-w-0">
+                <h2 className="text-sm md:text-[15px] font-semibold text-gray-800 truncate">
+                  {category.name}
+                </h2>
+                <span
+                  className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${
+                    category.type === "income"
+                      ? "bg-green-50 text-green-600"
+                      : "bg-red-50 text-red-500"
+                  }`}
+                >
+                  {category.type}
+                </span>
               </div>
             </div>
-            <RiDeleteBinLine color="#e7000b" size={23} />
+            <button
+              className="text-red-400 hover:text-red-600 transition-colors flex-shrink-0 ml-2"
+              aria-label={`Delete ${category.name}`}
+            >
+              <RiDeleteBinLine size={18} />
+            </button>
           </div>
         ))}
       </div>
-
-      {/* <div className="p-4 flex flex-col items-center gap-3">
-        <input
-          type="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-          className="w-24 h-12 border rounded"
-        />
-        <div className="text-lg font-semibold">{color}</div>
-        <div
-          className="w-24 h-12 rounded shadow"
-          style={{ backgroundColor: color }}
-        ></div>
-      </div> */}
     </div>
   );
 };

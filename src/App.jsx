@@ -29,9 +29,9 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col xl:flex-row">
               {/* Desktop Sidebar */}
-              <div className="hidden lg:block lg:w-[17%] lg:border-r-[1px] border-gray-200 h-screen lg:fixed lg:left-0 lg:top-0">
+              <div className="hidden lg:block lg:w-[220px] lg:border-r-[1px] xl:w-[17%] border-gray-200 h-screen lg:fixed lg:left-0 lg:top-0">
                 <SideBar />
               </div>
 
@@ -42,7 +42,7 @@ function App() {
               />
 
               {/* Main Content */}
-              <div className="w-full lg:w-[83%] lg:ml-[17%] min-h-screen py-4 md:py-5 px-4 md:px-7 bg-gray-50">
+              <div className="w-full lg:ml-[220px] xl:ml-[17%] xl:w-[83%] min-h-screen py-4 md:py-5 px-4 md:px-6 xl:px-7 bg-gray-50 ">
                 {/* Mobile Header with Hamburger Menu */}
                 <MobileHeader
                   onMenuClick={toggleSidebar}

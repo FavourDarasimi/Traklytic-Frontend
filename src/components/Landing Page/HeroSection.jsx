@@ -30,14 +30,14 @@ export default function HeroSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-white"
+      className="relative px-4 h-screen sm:px-6 lg:px-8 bg-white"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl  xl:max-w-[1500px] mx-auto flex items-center h-full">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Content */}
           <motion.div variants={itemVariants} className="space-y-8">
             <motion.div variants={itemVariants} className="space-y-6">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-5xl md:text-6xl font-semibold text-gray-900 leading-tight">
                 Take Control of Your Money{" "}
                 <span className="text-green-600">Without Stress</span>
               </h1>

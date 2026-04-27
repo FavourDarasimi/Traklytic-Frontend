@@ -17,10 +17,10 @@ export default function ModernNavbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm"
+      className="fixed w-full z-50 bg-white border-b border-gray-300 "
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-[80px]">
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">

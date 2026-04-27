@@ -1,6 +1,4 @@
 import React from "react";
-import SideBar from "../components/SideBar";
-import Header from "../components/Header";
 import { FaNairaSign } from "react-icons/fa6";
 import { FaWallet } from "react-icons/fa";
 import { MdArrowDownward, MdArrowUpward } from "react-icons/md";
@@ -9,17 +7,19 @@ import TransactionList from "../components/Transactions/TransactionList";
 
 const Transactions = () => {
   return (
-    <div className=" ">
+    <div className="w-full">
       <div>
-        <div className="flex justify-between">
-          <h1 className="font-medium text-[25px]">Transaction History</h1>
-          <Header />
+        <div className="flex justify-between items-center gap-4">
+          <h1 className="font-bold text-[22px] md:text-[25px] truncate">
+            Transaction History
+          </h1>
         </div>
-        <h1 className="bg-white p-2 w-fit rounded-xl font-medium mt-5">
-          Sep 15, 2025
-        </h1>
 
-        <div className="flex justify-evenly mt-5">
+        <h2 className="bg-white px-3 py-1.5 w-fit rounded-xl text-xs md:text-sm font-medium mt-4 border border-gray-200 text-gray-600">
+          Sep 15, 2025
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-5">
           <TransactionCard
             icon={FaNairaSign}
             name="Available Balance"

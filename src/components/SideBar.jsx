@@ -30,7 +30,7 @@ const SideBar = ({ isMobileDrawer = false }) => {
     >
       {/* Logo - Only show on desktop */}
       {!isMobileDrawer && (
-        <div className="text-lg md:text-xl lg:text-[30px] font-bold relative pl-4 md:pl-8 pt-5">
+        <div className="text-lg md:text-xl lg:text-[28px] xl:text-[30px] font-bold relative pl-4 md:pl-6 xl:pl-8 pt-5">
           Track<span className="text-green-600">lytic</span>
         </div>
       )}
@@ -78,7 +78,7 @@ const SideBar = ({ isMobileDrawer = false }) => {
       </div>
 
       {/* User Profile - Bottom */}
-      <div className="mx-4 md:mx-[5%] pb-4  left-0">
+      <div className="mx-4 md:mx-[5%] pb-4  w-full">
         <div className="flex justify-between w-full items-center p-2 h-fit border-t-[1px] border-[#e6e6e6]">
           <div className="flex gap-x-2 md:gap-x-3 items-center min-w-0 flex-1">
             <img

@@ -50,23 +50,20 @@ export default function LandingPageFeatures() {
       id="features"
       className="py-20 px-4 sm:px-6 lg:px-8 bg-white"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl xl:max-w-[1500px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16 space-y-4"
+          className="flex flex-col items-center mb-16 space-y-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Powerful Features for Smart Money Management
+          <h2 className="text-4xl md:text-4xl font-semibold text-gray-900">
+            Features for Smart Money Management
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Everything you need to take control of your finances is built right
-            in
-          </p>
+          <div className="border-t-4   w-[10%]" />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-8 place-items-center">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -77,15 +74,15 @@ export default function LandingPageFeatures() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="group bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all"
+                className="group hover:bg-green-600 bg-white border border-gray-200 rounded-lg p-8  hover:shadow-lg transition-all duration-300 flex flex-col items-center"
               >
-                <div className="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-100 transition-colors">
-                  <Icon className="text-green-600 w-7 h-7" />
+                <div className="w-12 h-12 border border-gray-300 rounded-sm flex items-center justify-center mb-6 group-hover:bg-white transition-colors">
+                  <Icon className="text-black w-6 h-6 group-hover:text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-white">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed group-hover:text-white text-center">
                   {feature.description}
                 </p>
               </motion.div>

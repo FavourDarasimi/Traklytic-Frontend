@@ -61,7 +61,7 @@ const CategoryExpensePieChart = () => {
         </h2>
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-4">
-          <div className="w-full md:w-[140px] lg:w-[180px] h-[140px] md:h-[140px] lg:h-[180px] flex-shrink-0 mx-auto md:mx-0">
+          <div className="w-full md:w-[140px] xl:w-[180px] h-[140px] md:h-[140px] xl:h-[180px] flex-shrink-0 mx-auto md:mx-0">
             <Doughnut data={data} options={options} />
           </div>
 

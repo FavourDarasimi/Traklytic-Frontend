@@ -1,121 +1,138 @@
 import React from "react";
 import { FaRegUser } from "react-icons/fa6";
-import { IoCameraOutline } from "react-icons/io5";
-import Sarah from "../../assets/sarah.jpg";
 import { GoUpload } from "react-icons/go";
 import { FiSave } from "react-icons/fi";
+import Sarah from "../../assets/sarah.jpg";
 
 const Profile = () => {
   return (
-    <div className="w-full  ">
-      <div className="flex gap-x-5 items-center">
-        <FaRegUser size={25} className="text-green-600" />
-        <div>
-          {" "}
-          <h1 className="text-[25px] font-medium">Profile Information</h1>
-        </div>
+    <div className="w-full">
+      {/* Section Header */}
+      <div className="flex gap-x-3 items-center">
+        <FaRegUser size={22} className="text-green-600 flex-shrink-0" />
+        <h1 className="text-[20px] md:text-[22px] font-semibold">
+          Profile Information
+        </h1>
       </div>
-      <h1 className="text-[14px] mt-1 text-gray-500">
+      <p className="text-sm text-gray-500 mt-1">
         Update your account profile information
-      </h1>
-      <div className="flex items-center gap-x-5 mt-5">
-        <img src={Sarah} alt="" className="rounded-full w-28 h-28 " />
-        <div className="space-y-3">
-          <div className="flex items-center gap-x-3 px-4 py-2 border-[1px] border-[#e6e6e6]  rounded  w-fit h-fit  bg-gray-50 cursor-pointer">
-            <GoUpload size={20} />
-            <button className="text-[15px]">Change Photo</button>
-          </div>{" "}
-          <h1 className="text-xs">JPG, PNG or GIF. Max size of 2MB.</h1>
+      </p>
+
+      {/* Avatar */}
+      <div className="flex items-center gap-x-4 mt-5">
+        <img
+          src={Sarah}
+          alt="Profile"
+          className="rounded-full w-20 h-20 md:w-28 md:h-28 object-cover flex-shrink-0"
+        />
+        <div className="space-y-2">
+          <label className="flex items-center gap-x-2 px-3 py-2 border border-gray-200 rounded-lg w-fit bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors">
+            <GoUpload size={16} className="text-gray-500" />
+            <span className="text-sm font-medium text-gray-700">
+              Change Photo
+            </span>
+            <input type="file" className="hidden" accept="image/*" />
+          </label>
+          <p className="text-xs text-gray-400">JPG, PNG or GIF. Max size of 2MB.</p>
         </div>
       </div>
-      <div className="mx-10 mt-7">
-        <div className="w-full">
-          <form className=" space-y-4">
-            <div className="grid grid-cols-2 gap-x-7 ">
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Username"
-                />
-              </div>
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Email"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-x-7">
-              {" "}
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Age
-                </label>
-                <input
-                  type="number"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Age"
-                />
-              </div>
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Phone Number
-                </label>
-                <input
-                  type="number"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Phone Number"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-x-7">
-              {" "}
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Occupation
-                </label>
-                <input
-                  type="text"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Occupation"
-                />
-              </div>
-              <div className="">
-                <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  className=" rounded-md p-2 w-full  h-[43px] border-[1px] border-[#e6e6e6] outline-none  "
-                  placeholder="Last Name"
-                />
-              </div>
-            </div>
 
-            <div className="">
-              <label htmlFor="input" className="font-medium pb-1 text-[15px]">
-                Bio
+      {/* Form */}
+      <div className="mt-7">
+        <form className="space-y-4">
+          {/* Row 1 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Username
               </label>
-              <textarea
+              <input
                 type="text"
-                className=" rounded-md p-2 w-full border-[1px] border-[#e6e6e6] outline-none  "
-                placeholder="Bio"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Username"
               />
             </div>
-            <button className="mt-4 text-center bg-green-600 outline-none flex items-center gap-x-4 border-2 cursor-pointer text-white py-[8px] px-[14px] rounded-xl text-[15px] hover:bg-white hover:border-2 hover:border-green-600 hover:text-green-600 transition-colors duration-500">
-              <FiSave size={18} />
-              Save Changes
-            </button>
-          </form>
-        </div>
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Email"
+              />
+            </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Age
+              </label>
+              <input
+                type="number"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Age"
+              />
+            </div>
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Phone Number"
+              />
+            </div>
+          </div>
+
+          {/* Row 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Occupation
+              </label>
+              <input
+                type="text"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Occupation"
+              />
+            </div>
+            <div>
+              <label className="block font-medium text-[14px] text-gray-700 mb-1">
+                Last Name
+              </label>
+              <input
+                type="text"
+                className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
+                placeholder="Last Name"
+              />
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div>
+            <label className="block font-medium text-[14px] text-gray-700 mb-1">
+              Bio
+            </label>
+            <textarea
+              className="rounded-lg p-2.5 w-full border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm resize-none transition"
+              placeholder="Tell us a little about yourself..."
+              rows={3}
+            />
+          </div>
+
+          {/* Save */}
+          <button
+            type="submit"
+            className="flex items-center gap-x-2 bg-green-600 text-white py-2 px-5 rounded-xl text-sm md:text-[15px] font-medium hover:bg-green-700 transition-colors mt-2"
+          >
+            <FiSave size={16} />
+            Save Changes
+          </button>
+        </form>
       </div>
     </div>
   );

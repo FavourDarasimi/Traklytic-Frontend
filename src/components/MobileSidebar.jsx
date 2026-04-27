@@ -16,7 +16,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-screen w-64 bg-white z-50 lg:hidden transform transition-all duration-300 ease-in-out shadow-xl flex flex-col ${
+        className={`fixed top-0 left-0 h-screen w-64 bg-white z-50 xl:hidden transform transition-all duration-300 ease-in-out shadow-xl flex flex-col ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

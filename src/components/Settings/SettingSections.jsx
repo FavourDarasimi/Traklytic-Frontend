@@ -10,16 +10,16 @@ const SettingSections = ({ section_name, title, section, setSection }) => {
         )}
       </div>{" "}
       {/* empty placeholder for arrow */}
-      <h1
-        className={`text-[16px]  cursor-pointer ${
+      <button
+        className={`text-sm md:text-[15px] cursor-pointer text-left transition-colors ${
           section === section_name
             ? "font-bold text-green-600"
-            : "text-gray-500"
+            : "text-gray-500 hover:text-gray-800"
         }`}
         onClick={() => setSection(section_name)}
       >
         {title}
-      </h1>
+      </button>
     </div>
   );
 };

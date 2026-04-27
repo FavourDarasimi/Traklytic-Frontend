@@ -45,32 +45,32 @@ const LatestTransactionTable = () => {
     }
   };
   return (
-    <div className="px-4 md:px-7 py-4 md:py-5 w-full h-fit text-wrap rounded-xl bg-white border-[1px] border-[#e6e6e6] shadow-xl">
+    <div className="px-4 md:px-6 py-4 md:py-5 w-full h-fit rounded-xl bg-white border border-[#e6e6e6] shadow-xl">
       <h1 className="text-base md:text-[19px] font-semibold">
         Recent Transactions
       </h1>
-      <div className="border-t border-t-[#dedddb] my-3" />
-      <div className="space-y-5">
-        {transactionData.map((transaction) => (
-          <div className="flex justify-between items-center">
-            <div className="flex gap-[14px] items-center">
+      <div className="border-t border-gray-200 my-3" />
+      <div className="space-y-4 md:space-y-5">
+        {transactionData.map((transaction, idx) => (
+          <div key={idx} className="flex justify-between items-center gap-2">
+            <div className="flex gap-3 items-center min-w-0">
               <div
-                className={`w-3 h-3 rounded-full ${getTypeColor(transaction.type)}`}
+                className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${getTypeColor(transaction.type)}`}
               />
-              <div>
-                <h1 className="text-[17px] font-semibold">
+              <div className="min-w-0">
+                <p className="text-sm md:text-[16px] font-semibold truncate">
                   {transaction.name}
-                </h1>
-                <h3 className="text-[13px] text-gray-600 font-medium">
+                </p>
+                <p className="text-[11px] md:text-[13px] text-gray-500 font-medium truncate">
                   {transaction.date_time}
-                </h3>
+                </p>
               </div>
             </div>
-            <div className="flex items-center font-semibold gap-1 ">
-              <h1 className="text-[19px]">
-                {transaction.type == "debit" ? "-" : "+"}₦{transaction.amount}
-              </h1>
-              <ChevronRight className="hover:underline hover:animate-pulse" />
+            <div className="flex items-center font-semibold gap-0.5 flex-shrink-0">
+              <span className="text-sm md:text-[17px] whitespace-nowrap">
+                {transaction.type === "debit" ? "-" : "+"}₦{transaction.amount}
+              </span>
+              <ChevronRight size={16} className="text-gray-400" />
             </div>
           </div>
         ))}

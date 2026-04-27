@@ -65,7 +65,7 @@ const ExpensesStatistics = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
         display: false,

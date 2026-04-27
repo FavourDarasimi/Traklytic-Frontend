@@ -17,7 +17,7 @@ const Authetication = () => {
     <div>
       <Navbar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className=" px-10 py-6 w-[26%]">
+        <div className=" px-10 py-6 w-full sm:w-[50%] md:w-[40%] lg:w-[34%] xl:w-[26%]">
           <div className="pb-7 text-center">
             <h1 className="font-bold text-[25px]">
               {authState == "signup" ? "Let's Get Started" : "Welcome Back!"}
