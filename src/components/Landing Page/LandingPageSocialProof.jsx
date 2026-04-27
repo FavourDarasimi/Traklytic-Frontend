@@ -8,7 +8,7 @@ export default function LandingPageSocialProof() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-100"
+      className="py-16 px-4 sm:px-6 lg:px-8  border-y border-gray-100"
     >
       <div className="max-w-7xl xl:max-w-[1500px] mx-auto">
         <div className="grid md:grid-cols-4 gap-8 text-center">

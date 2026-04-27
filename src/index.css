@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  } /* small = less bounce */
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 1.5s ease-in-out infinite; /* slow = higher duration */
+}

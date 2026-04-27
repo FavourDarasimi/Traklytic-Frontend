@@ -20,7 +20,7 @@ const MonthlyExpenses = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 xl:gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-2 gap-2 md:gap-3 xl:gap-4">
         {expenses.map((expense, index) => (
           <div
             key={index}

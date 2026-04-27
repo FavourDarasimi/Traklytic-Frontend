@@ -65,7 +65,7 @@ const ExpensesStatistics = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -111,7 +111,7 @@ const ExpensesStatistics = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 w-full h-full flex flex-col">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 w-full flex flex-col h-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-base md:text-[19px] font-semibold">
           Expenses Statistics
@@ -149,7 +149,7 @@ const ExpensesStatistics = () => {
           )}
         </div>
       </div>
-      <div className="flex-1 h-full w-full">
+      <div className="relative flex-1 min-h-[260px]">
         <Line data={data} options={options} />
       </div>
     </div>

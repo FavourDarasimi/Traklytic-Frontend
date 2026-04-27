@@ -3,7 +3,7 @@ import { LuCreditCard } from "react-icons/lu";
 
 const TotalTransactions = () => {
   return (
-    <div className="border-[1px] border-[#e6e6e6] shadow-xl bg-white p-4 md:p-5 rounded-xl">
+    <div className="border-[1px] border-[#e6e6e6] shadow-xl bg-white p-4 md:p-5 rounded-xl h-full w-full ">
       <div className="flex justify-between items-center">
         <h1 className="text-sm md:text-[15px] font-medium truncate">
           Total Transactions

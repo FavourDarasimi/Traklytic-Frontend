@@ -5,6 +5,7 @@ import LandingPageSocialProof from "../components/Landing Page/LandingPageSocial
 import LandingPageFeatures from "../components/Landing Page/LandingPageFeatures";
 import WhyChooseUsSection from "../components/Landing Page/WhyChooseUsSection";
 import TestimonialsSection from "../components/Landing Page/TestimonialsSection";
+import FAQSection from "../components/Landing Page/FAQSection";
 import CTASection from "../components/Landing Page/CTASection";
 import Footer from "../components/Landing Page/Footer";
 
@@ -18,6 +19,7 @@ export default function LandingPage() {
       <LandingPageFeatures />
       <WhyChooseUsSection />
       <TestimonialsSection />
+      <FAQSection />
       <CTASection />
       <Footer />
     </div>

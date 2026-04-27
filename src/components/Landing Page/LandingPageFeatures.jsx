@@ -50,20 +50,20 @@ export default function LandingPageFeatures() {
       id="features"
       className="py-20 px-4 sm:px-6 lg:px-8 bg-white"
     >
-      <div className="max-w-7xl xl:max-w-[1500px] mx-auto">
+      <div className="max-w-7xl  mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col items-center mb-16 space-y-4"
+          className="flex flex-col items-center text-center mb-16 space-y-4"
         >
           <h2 className="text-4xl md:text-4xl font-semibold text-gray-900">
             Features for Smart Money Management
           </h2>
-          <div className="border-t-4   w-[10%]" />
+          <div className="border-t-4 border-green-600 w-[10%]" />
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-8 place-items-center">
+        <div className="grid md:grid-cols-3 gap-8 place-items-center">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -76,7 +76,7 @@ export default function LandingPageFeatures() {
                 whileHover={{ y: -8 }}
                 className="group hover:bg-green-600 bg-white border border-gray-200 rounded-lg p-8  hover:shadow-lg transition-all duration-300 flex flex-col items-center"
               >
-                <div className="w-12 h-12 border border-gray-300 rounded-sm flex items-center justify-center mb-6 group-hover:bg-white transition-colors">
+                <div className="w-12 h-12 border border-gray-300 rounded-sm flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors">
                   <Icon className="text-black w-6 h-6 group-hover:text-green-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-white">

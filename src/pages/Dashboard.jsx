@@ -36,7 +36,7 @@ const Dashboard = () => {
             {getGreetingTime()} 👋
           </p>
           <h1 className="text-[24px] lg:text-[25px] xl:text-[26px] font-bold text-gray-900">
-            Olaniran Darasimi
+            Jake Smith
           </h1>
         </div>
       </div>
@@ -44,7 +44,7 @@ const Dashboard = () => {
       <div className="mt-4 md:mt-2"></div>
 
       {/* Main Dashboard Grid */}
-      <div className="flex flex-col xl:flex-row gap-5 mt-5 lg:mt-6">
+      <div className="flex flex-col 2xl:flex-row gap-5 mt-5 lg:mt-6">
         {/* Left Section - Main Content */}
         <div className="w-full xl:flex-1 min-w-0">
           {/* Stats Cards - Responsive Grid */}
@@ -142,24 +142,37 @@ const Dashboard = () => {
             </div>
 
             {/* Right Column - Table */}
-            <div className="w-full xl:w-[40%]">
+            <div className="w-full xl:w-[40%] flex flex-col">
               <LatestTransactionTable />
             </div>
           </div>
 
           {/* MonthlyBudget + TotalTransactions below charts — desktop only */}
-          <div className="hidden xl:grid xl:grid-cols-2 gap-6 mt-6">
+          <div className="hidden 2xl:grid 2xl:grid-cols-2 gap-6 mt-6">
             <MonthlyBudget />
             <TotalTransactions />
           </div>
         </div>
 
         {/* Right Section - Sidebar Stats (Desktop only) */}
-        <div className="hidden xl:block xl:w-72 2xl:w-80 space-y-5 xl:space-y-5">
-          <div className="hidden xl:flex w-full">
+        <div className="hidden xl:flex xl:gap-5 2xl:block 2xl:w-80 space-y-5 xl:space-y-5">
+          <div className="hidden xl:flex xl:w-[50%] 2xl:w-full">
             <MonthlyExpenses />
           </div>
-          <AIInsights />
+
+          <div className="w-full xl:w-[50%] 2xl:w-full space-y-5">
+            <AIInsights />
+
+            <div className="hidden xl:flex 2xl:hidden gap-5 w-full items-stretch">
+              <div className="w-[50%] flex-1 h-full">
+                <MonthlyBudget />
+              </div>
+
+              <div className="w-[50%] flex-1 h-full">
+                <TotalTransactions />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

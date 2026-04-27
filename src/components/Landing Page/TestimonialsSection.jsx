@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-16 space-y-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-4xl font-semibold text-gray-900">
             Loved by Users Worldwide
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">

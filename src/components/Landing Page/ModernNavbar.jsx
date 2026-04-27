@@ -17,7 +17,7 @@ export default function ModernNavbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed w-full z-50 bg-white border-b border-gray-300 "
+      className="sticky top-0 w-full z-50 bg-white border-b border-gray-300 "
     >
       <div className="max-w-7xl xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-[80px]">
@@ -26,7 +26,7 @@ export default function ModernNavbar() {
             <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
               <FaChartLine className="text-white w-5 h-5" />
             </div>
-            <span className="font-bold text-lg text-gray-900">Tracklytic</span>
+            <span className="font-bold text-xl text-gray-900">Tracklytic</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -35,7 +35,7 @@ export default function ModernNavbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-gray-600 hover:text-gray-900 font-medium text-sm transition-colors"
+                className="text-gray-600 hover:text-gray-900 font-medium text-[16px] transition-colors"
               >
                 {link.label}
               </a>

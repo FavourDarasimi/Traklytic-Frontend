@@ -9,14 +9,14 @@ export default function CTASection() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+      className="py-20 px-4 sm:px-6 lg:px-8 "
     >
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-gray-900"
+          className="text-4xl md:text-5xl font-semibold text-gray-900"
         >
           Start Managing Your Money Smarter Today
         </motion.h2>
