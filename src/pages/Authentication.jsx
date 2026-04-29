@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import { FaRegUser } from "react-icons/fa6";
-import { MdLockOutline } from "react-icons/md";
-import { MdOutlineEmail } from "react-icons/md";
+import Footer from "../components/Footer";
+
 import { Link } from "react-router-dom";
-import ModernNavbar from "../components/Landing Page/ModernNavbar";
+import ModernNavbar from "../components/ModernNavbar";
 
 const Authetication = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [firtsName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [authState, setAuthState] = useState("signup");
   return (
-    <div>
+    <div className="flex flex-col ">
       <ModernNavbar />
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-80px)]">
-        <div className=" px-10 py-6 w-full sm:w-[50%] md:w-[40%] lg:w-[34%] xl:w-[26%]">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-var(--navbar-height))]">
+        <div className=" px-10  w-full sm:w-[50%] md:w-[40%] lg:w-[34%] xl:w-[26%]">
           <div className="pb-7 text-center">
             <h1 className="font-bold text-[25px]">
               {authState == "signup" ? "Let's Get Started" : "Welcome Back!"}
@@ -156,6 +154,7 @@ const Authetication = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

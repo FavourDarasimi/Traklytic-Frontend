@@ -1,45 +1,246 @@
-import React from "react";
-import { FaNairaSign } from "react-icons/fa6";
-import { FaWallet } from "react-icons/fa";
-import { MdArrowDownward, MdArrowUpward } from "react-icons/md";
-import TransactionCard from "../components/Transactions/TransactionCard";
-import TransactionList from "../components/Transactions/TransactionList";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FaFileExport } from "react-icons/fa6";
+import TransactionHeader from "../components/Transactions/TransactionHeader";
+import SummaryStats from "../components/Transactions/SummaryStats";
+import TransactionFilters from "../components/Transactions/TransactionFilters";
+import TransactionTableView from "../components/Transactions/TransactionTableView";
+import EmptyState from "../components/Transactions/EmptyState";
+import Pagination from "../components/Transactions/Pagination";
+import QuickAddModal from "../components/Transactions/QuickAddModal";
 
 const Transactions = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    dateRange: "all",
+    category: "all",
+    type: "all",
+    sortBy: "latest",
+  });
+
+  // Sample transactions data
+  const allTransactions = [
+    {
+      id: 1,
+      name: "Annette Block",
+      date: "20 Feb 2025 AT 10:00 AM",
+      type: "Income",
+      amount: "$948.55",
+      category: "Salary",
+    },
+    {
+      id: 2,
+      name: "Wade Warren",
+      date: "10 May 2025 AT 10:00 PM",
+      type: "Income",
+      amount: "$328.85",
+      category: "Salary",
+    },
+    {
+      id: 3,
+      name: "Jacks Cooper",
+      date: "20 Aug 2025 AT 03:00 AM",
+      type: "Expense",
+      amount: "$446.61",
+      category: "Food",
+    },
+    {
+      id: 4,
+      name: "Henry Roberts",
+      date: "24 Jan 2025 AT 12:00 PM",
+      type: "Income",
+      amount: "$778.35",
+      category: "Salary",
+    },
+    {
+      id: 5,
+      name: "Kristin Weston",
+      date: "18 Dec 2025 AT 05:00 AM",
+      type: "Expense",
+      amount: "$302.87",
+      category: "Food",
+    },
+    {
+      id: 6,
+      name: "Bestie Cooper",
+      date: "30 Sep 2025 AT 06:00 PM",
+      type: "Income",
+      amount: "$106.58",
+      category: "Salary",
+    },
+    {
+      id: 7,
+      name: "Theresa Webb",
+      date: "28 Mar 2025 AT 10:00 AM",
+      type: "Expense",
+      amount: "$219.78",
+      category: "Food",
+    },
+    {
+      id: 8,
+      name: "Ariene McCoy",
+      date: "08 Nov 2025 AT 03:00 PM",
+      type: "Expense",
+      amount: "$105.55",
+      category: "Food",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+  ];
+
+  // Filter and search transactions
+  const filteredTransactions = allTransactions.filter((transaction) => {
+    const matchesSearch =
+      transaction.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      transaction.category.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesType =
+      filters.type === "all" ||
+      transaction.type.toLowerCase() === filters.type.toLowerCase();
+
+    const matchesCategory =
+      filters.category === "all" ||
+      transaction.category.toLowerCase() === filters.category.toLowerCase();
+
+    return matchesSearch && matchesType && matchesCategory;
+  });
+
+  // Pagination
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const paginatedTransactions = filteredTransactions.slice(startIdx, endIdx);
+
+  const handleExportCSV = () => {
+    const headers = ["Merchant", "Date", "Type", "Category", "Amount"];
+    const csvContent = [
+      headers.join(","),
+      ...filteredTransactions.map((t) =>
+        [t.name, t.date, t.type, t.category, t.amount].join(","),
+      ),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `transactions-${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+  };
+
+  const handleAddTransaction = (data) => {
+    console.log("New transaction:", data);
+    // TODO: Add API call to save transaction
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="w-full">
-      <div>
-        <div className="flex justify-between items-center gap-4">
-          <h1 className="font-bold text-[22px] md:text-[25px] truncate">
-            Transaction History
-          </h1>
-        </div>
+    <div className="w-full min-h-screen">
+      <div className="space-y-6 sm:space-y-8">
+        {/* Header */}
+        <TransactionHeader
+          onAddClick={() => setIsModalOpen(true)}
+          onFilterClick={() => setIsFilterOpen(!isFilterOpen)}
+          onSearch={setSearchQuery}
+        />
 
-        <h2 className="bg-white px-3 py-1.5 w-fit rounded-xl text-xs md:text-sm font-medium mt-4 border border-gray-200 text-gray-600">
-          Sep 15, 2025
-        </h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-5">
-          <TransactionCard
-            icon={FaNairaSign}
-            name="Available Balance"
-            amount={14000}
-          />
-          <TransactionCard icon={FaWallet} name="Savings" amount={14000} />
-          <TransactionCard
-            icon={MdArrowDownward}
-            name="Income"
-            amount={14000}
-          />
-          <TransactionCard
-            icon={MdArrowUpward}
-            name="Expenses"
-            amount={14000}
+        {/* Filter Panel */}
+        <div className="relative">
+          <TransactionFilters
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+            onApply={(newFilters) => {
+              setFilters(newFilters);
+              setCurrentPage(1);
+            }}
           />
         </div>
 
-        <TransactionList />
+        {/* Summary Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <SummaryStats
+            totalTransactions={allTransactions.length}
+            totalIncome={125000}
+            totalExpenses={45000}
+          />
+        </motion.div>
+
+        {/* Transactions Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="space-y-4 sm:space-y-5"
+        >
+          {/* Header with Export */}
+          {paginatedTransactions.length > 0 && (
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+                Recent Transactions
+              </h2>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleExportCSV}
+                className="flex items-center gap-2 text-green-600 hover:text-green-700 font-medium text-xs sm:text-sm transition-all"
+              >
+                <FaFileExport size={14} />
+                Export CSV
+              </motion.button>
+            </div>
+          )}
+
+          {/* Transactions Table or Empty State */}
+          {paginatedTransactions.length > 0 ? (
+            <>
+              <TransactionTableView transactions={paginatedTransactions} />
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={filteredTransactions.length}
+                />
+              )}
+            </>
+          ) : (
+            <EmptyState onAddClick={() => setIsModalOpen(true)} />
+          )}
+        </motion.div>
       </div>
+
+      {/* Quick Add Modal */}
+      <QuickAddModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddTransaction}
+      />
+
+      {/* Mobile Floating Action Button */}
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setIsModalOpen(true)}
+        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center shadow-lg text-lg transition-all z-30"
+      >
+        +
+      </motion.button>
     </div>
   );
 };

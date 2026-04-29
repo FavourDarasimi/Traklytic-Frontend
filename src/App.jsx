@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen ">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<Authentication />} />
@@ -31,7 +31,7 @@ function App() {
           element={
             <div className="flex flex-col xl:flex-row">
               {/* Desktop Sidebar */}
-              <div className="hidden lg:block lg:w-[220px] lg:border-r-[1px] xl:w-[17%] border-gray-200 h-screen lg:fixed lg:left-0 lg:top-0">
+              <div className="hidden lg:block lg:w-[220px] lg:border-r-[1px] xl:w-[17%] border-gray-200 h-screen lg:fixed lg:left-0 lg:top-0 z-50">
                 <SideBar />
               </div>
 

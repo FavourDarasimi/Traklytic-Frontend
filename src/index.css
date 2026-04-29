@@ -13,3 +13,7 @@
 .animate-bounce-soft {
   animation: bounce-soft 1.5s ease-in-out infinite; /* slow = higher duration */
 }
+
+body {
+  overscroll-behavior: none;
+}

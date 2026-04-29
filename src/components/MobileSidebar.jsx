@@ -1,6 +1,7 @@
 import React from "react";
 import { X } from "lucide-react";
 import SideBar from "./SideBar";
+import { FaChartLine } from "react-icons/fa6";
 
 const MobileSidebar = ({ isOpen, onClose }) => {
   return (
@@ -22,9 +23,14 @@ const MobileSidebar = ({ isOpen, onClose }) => {
       >
         {/* Header */}
         <div className="p-4 flex justify-between items-center border-b border-gray-200">
-          <h1 className="text-lg font-bold">
-            Track<span className="text-green-600">lytic</span>
-          </h1>
+          <div className="flex justify-between items-center gap-2">
+            <div className="w-7 sm:w-8 h-7 sm:h-8 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FaChartLine className="text-white w-4 sm:w-5 h-4 sm:h-5" />
+            </div>
+            <h1 className="text-lg font-bold">
+              Track<span className="text-green-600">lytic</span>
+            </h1>
+          </div>
           <button
             onClick={onClose}
             className="p-1 hover:bg-gray-100 rounded-lg transition-colors"

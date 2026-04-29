@@ -1,5 +1,5 @@
 import React from "react";
-import ModernNavbar from "../components/Landing Page/ModernNavbar";
+import ModernNavbar from "../components/ModernNavbar";
 import HeroSection from "../components/Landing Page/HeroSection";
 import LandingPageSocialProof from "../components/Landing Page/LandingPageSocialProof";
 import LandingPageFeatures from "../components/Landing Page/LandingPageFeatures";
@@ -7,7 +7,7 @@ import WhyChooseUsSection from "../components/Landing Page/WhyChooseUsSection";
 import TestimonialsSection from "../components/Landing Page/TestimonialsSection";
 import FAQSection from "../components/Landing Page/FAQSection";
 import CTASection from "../components/Landing Page/CTASection";
-import Footer from "../components/Landing Page/Footer";
+import Footer from "../components/Footer";
 
 // Main Landing Page Component
 export default function LandingPage() {

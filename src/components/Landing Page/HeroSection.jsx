@@ -32,7 +32,7 @@ export default function HeroSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="relative px-4 h-[calc(100vh-80px)] lg:px-8 bg-white"
+      className="relative px-4 h-[calc(100vh-var(--navbar-height))] lg:px-8 bg-white"
     >
       <div className="max-w-7xl lg:max-w-[1500px] mx-auto flex items-center h-full overflow-hidden px-4  lg:px-3">
         <div className="grid sm:grid-cols-1 md:grid-cols-2 items-center gap-4 sm:gap-6">

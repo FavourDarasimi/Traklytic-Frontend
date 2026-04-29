@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaChartLine, FaBars, FaXmark } from "react-icons/fa6";
 
 export default function ModernNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    if (navRef.current) {
+      document.documentElement.style.setProperty(
+        "--navbar-height",
+        navRef.current.offsetHeight + "px",
+      );
+    }
+  }, []);
 
   const navLinks = [
     { label: "Features", href: "#features" },
@@ -17,10 +27,11 @@ export default function ModernNavbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      ref={navRef}
       className="sticky top-0 w-full z-50 bg-white border-b border-gray-300 "
     >
       <div className="max-w-7xl xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-[80px]">
+        <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-7 sm:w-8 h-7 sm:h-8 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
