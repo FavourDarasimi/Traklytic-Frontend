@@ -4,7 +4,7 @@ import ProgressBar from "./ProgressBar";
 
 const MonthlyBudget = () => {
   return (
-    <div className="h-fit border-[1px] border-[#e6e6e6] shadow-xl bg-white p-4 md:p-5 rounded-xl">
+    <div className="h-full w-full  border-[1px] border-[#e6e6e6] shadow-xl bg-white p-4 md:p-5 rounded-xl">
       <div className="flex justify-between items-center">
         <h1 className="text-sm md:text-[15px] font-medium truncate">
           Monthly budget

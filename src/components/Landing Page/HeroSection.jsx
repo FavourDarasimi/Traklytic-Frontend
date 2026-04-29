@@ -32,18 +32,24 @@ export default function HeroSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="relative px-4 h-[calc(100vh-80px)] sm:px-6 lg:px-8 bg-white"
+      className="relative px-4 h-[calc(100vh-80px)] lg:px-8 bg-white"
     >
-      <div className="max-w-7xl  mx-auto flex items-center h-full overflow-hidden">
-        <div className="grid md:grid-cols-2  items-center">
+      <div className="max-w-7xl lg:max-w-[1500px] mx-auto flex items-center h-full overflow-hidden px-4  lg:px-3">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 items-center gap-4 sm:gap-6">
           {/* Left Side - Content */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            <motion.div variants={itemVariants} className="space-y-6">
-              <h1 className="text-5xl md:text-6xl font-semibold text-gray-900 leading-tight">
+          <motion.div
+            variants={itemVariants}
+            className="space-y-6 sm:space-y-8 text-center md:text-left"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="space-y-4 sm:space-y-6"
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight">
                 Take Control of Your Money{" "}
                 <span className="text-green-600">Without Stress</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed">
                 Track expenses, build budgets, and grow smarter financial habits
                 in one place. Tracklytic makes personal finance simple, clear,
                 and achievable.
@@ -53,10 +59,10 @@ export default function HeroSection() {
             {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <Link to="/auth/">
-                <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center gap-2 w-full sm:w-auto justify-center">
+                <button className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base md:text-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center gap-2 w-full sm:w-auto justify-center">
                   Get Started Free
                   <FaArrowRight size={20} />
                 </button>
@@ -66,14 +72,14 @@ export default function HeroSection() {
             {/* Trust Signals */}
             <motion.div
               variants={itemVariants}
-              className="space-y-2 border-t border-gray-100 pt-6"
+              className="space-y-2 border-t border-gray-100 pt-4 sm:pt-6"
             >
-              <div className="flex items-center gap-2 text-gray-600">
-                <FaCheck size={20} className="text-green-600" />
+              <div className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                <FaCheck size={16} className="text-green-600 flex-shrink-0" />
                 <span className="font-medium">No credit card required</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <FaCheck size={20} className="text-green-600" />
+              <div className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                <FaCheck size={16} className="text-green-600 flex-shrink-0" />
                 <span className="font-medium">Trusted by 10,000+ users</span>
               </div>
             </motion.div>
@@ -82,11 +88,11 @@ export default function HeroSection() {
           {/* Right Side - Dashboard Mockup */}
           <motion.div
             variants={itemVariants}
-            className=" px-4 h-full sm:px-6 lg:px-8 bg-white hidden md:block"
+            className="h-full  bg-white hidden md:flex items-center justify-center"
           >
             <img
               src={phone}
-              className="animate-bounce-soft w-[160%] max-w-none"
+              className="animate-bounce-soft lg:w-[170%] md:w-[250%] max-w-none"
             />
           </motion.div>
         </div>

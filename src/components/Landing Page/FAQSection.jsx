@@ -39,20 +39,20 @@ const FAQItem = ({ faq, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="border border-gray-200 p-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all"
+      className="border border-gray-200 p-3 sm:p-4 md:p-5 rounded-lg cursor-pointer hover:bg-gray-50 transition-all"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left focus:outline-none"
+        className="w-full flex justify-between items-center text-left focus:outline-none gap-3"
       >
-        <span className="text-lg font-medium text-gray-900 pr-4">
+        <span className="text-xs sm:text-sm md:text-lg font-medium text-gray-900 pr-2">
           {faq.question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          <FaChevronDown className="text-gray-500 flex-shrink-0" />
+          <FaChevronDown className="text-gray-500 flex-shrink-0 text-sm sm:text-base" />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -64,7 +64,9 @@ const FAQItem = ({ faq, index }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="mt-4 text-gray-600 leading-relaxed">{faq.answer}</p>
+            <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed">
+              {faq.answer}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -74,21 +76,21 @@ const FAQItem = ({ faq, index }) => {
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 ">
+    <section id="faq" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col items-center mb-12 space-y-4"
+          className="flex flex-col items-center mb-10 sm:mb-12 space-y-2 sm:space-y-4"
         >
-          <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl  font-semibold text-gray-900 text-center">
             Frequently Asked Questions
           </h2>
-          <div className="border-t-4 border-green-600 w-[10%]" />
+          <div className="border-t-4 border-green-600 w-[15%] sm:w-[12%] md:w-[10%]" />
         </motion.div>
 
-        <div className="space-y-2">
+        <div className="space-y-1.5 sm:space-y-2">
           {faqs.map((faq, index) => (
             <FAQItem key={index} faq={faq} index={index} />
           ))}

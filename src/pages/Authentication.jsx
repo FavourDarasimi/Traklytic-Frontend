@@ -4,6 +4,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdLockOutline } from "react-icons/md";
 import { MdOutlineEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
+import ModernNavbar from "../components/Landing Page/ModernNavbar";
 
 const Authetication = () => {
   const [username, setUsername] = useState("");
@@ -15,8 +16,8 @@ const Authetication = () => {
   const [authState, setAuthState] = useState("signup");
   return (
     <div>
-      <Navbar />
-      <div className="flex flex-col items-center justify-center h-screen">
+      <ModernNavbar />
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-80px)]">
         <div className=" px-10 py-6 w-full sm:w-[50%] md:w-[40%] lg:w-[34%] xl:w-[26%]">
           <div className="pb-7 text-center">
             <h1 className="font-bold text-[25px]">
