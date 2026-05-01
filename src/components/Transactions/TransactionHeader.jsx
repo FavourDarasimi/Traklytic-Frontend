@@ -28,7 +28,7 @@ const TransactionHeader = ({ onAddClick, onFilterClick, onSearch }) => {
       </div>
 
       {/* Search and Actions */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+      <div className="flex  gap-3 sm:gap-4 items-stretch sm:items-center">
         {/* Search Bar */}
         <div className="relative flex-1">
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />

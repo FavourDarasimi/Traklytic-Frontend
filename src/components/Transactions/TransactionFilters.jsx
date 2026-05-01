@@ -63,39 +63,42 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
             className="fixed inset-0 bg-black/70 z-[60]"
             style={{ pointerEvents: "auto" }}
-          />
+          /> */}
 
           {/* Filter Panel */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-0 left-0 right-0 z-[70] md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 bg-white border border-gray-200 rounded-t-2xl md:rounded-2xl p-5 sm:p-6 w-[25%]  max-h-[90vh] overflow-y-auto md:max-h-none"
+            className="fixed  z-[70] md:absolute md:bottom-auto md:top-full right-0 md:left-auto  bg-white border border-gray-200 rounded-t-2xl md:rounded-2xl p-5 sm:p-6 w-[60%] md:w-[25%]  max-h-[90vh] overflow-y-auto md:max-h-none"
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-5 sm:mb-6">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">
                 Filters
               </h3>
-              <button
+              {/* <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <FaX size={18} />
-              </button>
+              </button> */}
+              <h1 onClick={handleReset} className="text-green-600">
+                Reset
+              </h1>
             </div>
 
             {/* Filters */}
             <div className="space-y-4 sm:space-y-5">
               {/* Date Range */}
-              <div>
+              {/* <div>
                 <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
                   Date Range
                 </label>
@@ -112,10 +115,10 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               {/* Category */}
-              <div>
+              {/* <div>
                 <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
                   Category
                 </label>
@@ -132,10 +135,10 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               {/* Type */}
-              <div>
+              {/* <div>
                 <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
                   Type
                 </label>
@@ -150,10 +153,10 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               {/* Sort By */}
-              <div>
+              {/* <div>
                 <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
                   Sort By
                 </label>
@@ -168,6 +171,22 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
                     </option>
                   ))}
                 </select>
+              </div> */}
+
+              <div>
+                <h1 className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
+                  Transaction Type
+                </h1>
+                <div className="grid grid-flow-col auto-cols-[80px] gap-4 overflow-x-auto ">
+                  {filterOptions.type.map((option) => (
+                    <div
+                      onClick={(e) => handleFilterChange("type", option.value)}
+                      className={`${filters.type == option.value ? "border border-green-600 bg-green-600/5" : "border border-gray-400"} w-full  rounded-full p-2`}
+                    >
+                      {option.value}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

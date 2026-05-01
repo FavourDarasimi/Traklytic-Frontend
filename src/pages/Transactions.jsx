@@ -95,6 +95,70 @@ const Transactions = () => {
       amount: "$210.45",
       category: "Salary",
     },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
+    {
+      id: 9,
+      name: "Jackson Toper",
+      date: "12 Oct 2025 AT 03:00 AM",
+      type: "Income",
+      amount: "$210.45",
+      category: "Salary",
+    },
   ];
 
   // Filter and search transactions
@@ -231,16 +295,6 @@ const Transactions = () => {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddTransaction}
       />
-
-      {/* Mobile Floating Action Button */}
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsModalOpen(true)}
-        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center shadow-lg text-lg transition-all z-30"
-      >
-        +
-      </motion.button>
     </div>
   );
 };

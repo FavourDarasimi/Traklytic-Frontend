@@ -202,10 +202,10 @@ const Dashboard = () => {
         <MonthlyExpenses />
         <AIInsights />
 
-        <div className="grid grid-cols-2 gap-3">
-          <MonthlyBudget />
-          <TotalTransactions />
-        </div>
+        {/* <div className="grid grid-cols-2 gap-3"> */}
+        <MonthlyBudget />
+        <TotalTransactions />
+        {/* </div> */}
       </div>
     </div>
   );

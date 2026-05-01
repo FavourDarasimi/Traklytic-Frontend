@@ -79,19 +79,19 @@ export default function ModernNavbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden border-t border-gray-100 py-3 sm:py-4 space-y-2 sm:space-y-4 px-0"
+            className="lg:hidden border-t border-gray-100 py-3 sm:py-4 space-y-2 sm:space-y-4  px-4 sm:px-6 absolute left-0 z-[60] bg-white w-full "
           >
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="block text-gray-600 hover:text-gray-900 font-medium text-xs sm:text-sm px-4 sm:px-6 py-2"
+                className="block text-gray-600 hover:text-gray-900 font-medium text-xs sm:text-sm py-2"
               >
                 {link.label}
               </a>
             ))}
             <Link to="/auth/">
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-xs sm:text-sm transition-all mx-4 sm:mx-6 mb-2">
+              <button className="w-full bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-xs sm:text-sm transition-all  mb-2">
                 Get Started
               </button>
             </Link>

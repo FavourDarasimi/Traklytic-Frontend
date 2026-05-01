@@ -57,7 +57,7 @@ const Authetication = () => {
             </div>
 
             <div
-              className={`${authState == "login" ? "hidden" : ""} flex gap-x-5 w-full`}
+              className={`${authState == "login" ? "hidden" : ""} grid grid-cols-2 gap-x-5 w-full`}
             >
               <div className="flex flex-col ">
                 <label className="text-[14.5px] font-semibold">
@@ -66,7 +66,7 @@ const Authetication = () => {
                 <div className=" ">
                   <input
                     type="text"
-                    className="border-[1px] border-[#a9a9b0] rounded-xl  h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                    className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
                     placeholder="John"
                     onChange={(e) => setFirstName(e.target.value)}
                   />
@@ -78,7 +78,7 @@ const Authetication = () => {
                 <div className=" ">
                   <input
                     type="text"
-                    className="border-[1px] border-[#a9a9b0] rounded-xl  h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
+                    className="border-[1px] border-[#a9a9b0] rounded-xl w-full h-[48px] p-3 mt-2 text-[14px] focus:border-2 focus:border-green-600 outline-none"
                     placeholder="Doe"
                     onChange={(e) => setLastName(e.target.value)}
                   />

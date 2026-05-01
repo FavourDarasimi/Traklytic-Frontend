@@ -70,7 +70,7 @@ const SummaryStats = ({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+      className="grid grid-flow-col auto-cols-[11rem]  md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto"
     >
       {stats.map((stat) => {
         const Icon = stat.icon;
@@ -79,18 +79,18 @@ const SummaryStats = ({
             key={stat.id}
             variants={itemVariants}
             whileHover={{ y: -4 }}
-            className={` border bg-white border-gray-300 rounded-xl p-5 sm:p-6 md:p-7 transition-all hover:shadow-lg cursor-pointer`}
+            className={` border  bg-white border-gray-300 rounded-xl p-5 sm:p-6 md:p-7 transition-all hover:shadow-lg cursor-pointer`}
           >
             {/* Header with Icon */}
             <div className="flex items-start justify-between mb-4">
               <div className={`${stat.iconColor} text-xl sm:text-2xl`}>
                 <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
-              <span
+              {/* <span
                 className={`text-xs sm:text-sm font-semibold ${stat.changeColor}`}
               >
                 {stat.change}
-              </span>
+              </span> */}
             </div>
 
             {/* Label */}

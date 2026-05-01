@@ -94,15 +94,11 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
                 <p className="text-sm text-gray-600">{transaction.date}</p>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: hoveredId === idx ? 1 : 0.5 }}
-                  className="flex gap-2"
-                >
-                  <button className="p-2  text-gray-600 rounded-lg ">
+                <motion.div className="flex gap-2">
+                  <button className="p-2  text-gray-600 rounded-lg hover:text-gray-400 transition-colors duration-300 cursor-pointer">
                     <FaPencil size={14} />
                   </button>
-                  <button className="p-2  text-gray-600 rounded-lg ">
+                  <button className="p-2  text-gray-600 rounded-lg hover:text-gray-400 transition-colors duration-300 cursor-pointer">
                     <FaTrash size={14} />
                   </button>
                 </motion.div>
@@ -120,9 +116,6 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
       {transactions.map((transaction, idx) => (
         <motion.div
           key={idx}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.05 }}
           className="bg-white border border-gray-200 rounded-lg p-4 space-y-3"
         >
           {/* Header */}
@@ -173,7 +166,7 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden z-10"
+                  className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden z-50"
                 >
                   <button className="w-full px-4 py-2 text-left text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap">
                     <FaPencil size={12} /> Edit

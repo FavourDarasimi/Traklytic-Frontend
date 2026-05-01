@@ -26,7 +26,7 @@ const MonthlyExpenses = () => {
             key={index}
             className="bg-gray-50/40 rounded-xl p-3 text-center border border-gray-200"
           >
-            <p className="text-xs text-gray-600 font-medium mb-2">
+            <p className="text-xs text-gray-600 font-medium mb-2 truncate">
               {expense.name}
             </p>
             <p className="text-sm md:text-base font-semibold text-gray-900">
