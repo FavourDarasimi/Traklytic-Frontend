@@ -10,7 +10,7 @@ import Mark from "../assets/mark.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { FaChartLine } from "react-icons/fa6";
 
-const SideBar = ({ isMobileDrawer = false }) => {
+const Sidebar = ({ isMobileDrawer = false }) => {
   const location = useLocation();
 
   const getActive = (pathname) => {
@@ -136,4 +136,4 @@ const SideBar = ({ isMobileDrawer = false }) => {
   );
 };
 
-export default SideBar;
+export default Sidebar;

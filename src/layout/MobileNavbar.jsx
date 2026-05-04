@@ -1,8 +1,8 @@
 import React from "react";
 import { Menu } from "lucide-react";
-import Header from "./Header";
+import Navbar from "./Navbar";
 
-const MobileHeader = ({ onMenuClick, onAddTransaction }) => {
+const MobileNavbar = ({ onMenuClick, onAddTransaction }) => {
   return (
     <div className="lg:hidden mb-4 flex justify-between items-center">
       <button
@@ -12,9 +12,9 @@ const MobileHeader = ({ onMenuClick, onAddTransaction }) => {
       >
         <Menu size={24} className="text-gray-700" />
       </button>
-      <Header isMobile={true} onAddTransaction={onAddTransaction} />
+      <Navbar isMobile={true} onAddTransaction={onAddTransaction} />
     </div>
   );
 };
 
-export default MobileHeader;
+export default MobileNavbar;

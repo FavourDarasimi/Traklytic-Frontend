@@ -1,7 +1,7 @@
 import React from "react";
 import { MdAdd, MdOutlineNotifications } from "react-icons/md";
 
-const Header = ({ isMobile = false, onAddTransaction }) => {
+const Navbar = ({ isMobile = false, onAddTransaction }) => {
   return (
     <div
       className={isMobile ? "flex gap-x-2 items-center" : "w-full md:w-auto"}
@@ -29,4 +29,4 @@ const Header = ({ isMobile = false, onAddTransaction }) => {
   );
 };
 
-export default Header;
+export default Navbar;

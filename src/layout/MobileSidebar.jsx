@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-import SideBar from "./SideBar";
+import Sidebar from "./Sidebar";
 import { FaChartLine } from "react-icons/fa6";
 
 const MobileSidebar = ({ isOpen, onClose }) => {
@@ -41,7 +41,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Sidebar Content */}
-        <SideBar isMobileDrawer={true} />
+        <Sidebar isMobileDrawer={true} />
       </div>
     </>
   );

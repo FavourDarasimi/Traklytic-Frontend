@@ -8,7 +8,6 @@ import { FiPieChart } from "react-icons/fi";
 import LatestTransactionTable from "../components/Dashboard/LatestTransactionTable";
 import QuickAction from "../components/Dashboard/QuickAction";
 import ProgressBar from "../components/Dashboard/ProgressBar";
-import Header from "../components/Header";
 import MonthlyBudget from "../components/Dashboard/MonthlyBudget";
 import TotalTransactions from "../components/Dashboard/TotalTransactions";
 import ExpenseDistribution from "../components/Dashboard/ExpenseDistribution";
