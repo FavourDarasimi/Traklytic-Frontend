@@ -1,0 +1,112 @@
+/\*\*
+
+- API Services Documentation
+-
+- This folder contains all API service modules for communicating with the backend.
+-
+- Structure:
+- - config.js - Configuration (base URL, endpoints)
+- - axiosInstance.js - Axios setup with auth interceptors
+- - errorHandler.js - Error handling utilities
+- - authService.js - Authentication (login, logout, register)
+- - categoryService.js - Category operations
+- - transactionService.js - Transaction operations (add, OCR)
+- - budgetService.js - Budget/spending limit operations
+- - savingPlanService.js - Saving plan operations
+- - insightService.js - AI insights
+- - index.js - Clean exports of all services
+-
+- Usage Examples:
+- ================
+-
+- 1.  Authentication
+- import { authService } from '@/services/api';
+-
+- const { access_token, refresh_token } = await authService.login(email, password);
+- const user = await authService.getCurrentUser();
+- await authService.logout();
+-
+- 2.  Categories
+- import { categoryService } from '@/services/api';
+-
+- const categories = await categoryService.getCategories();
+- const newCategory = await categoryService.addCategory({ name: 'Groceries' });
+-
+- 3.  Transactions
+- import { transactionService } from '@/services/api';
+-
+- const transaction = await transactionService.addTransaction({
+-      amount: 100,
+-      description: 'Grocery shopping',
+-      category: 1,
+-      type: 'expense'
+- });
+-
+- const formData = transactionService.createReceiptFormData(file);
+- const extracted = await transactionService.uploadReceipt(formData);
+-
+- 4.  Budgets
+- import { budgetService } from '@/services/api';
+-
+- const budget = await budgetService.addGeneralBudget({ amount: 5000 });
+- await budgetService.editGeneralBudget(1, { amount: 6000 });
+-
+- 5.  Saving Plans
+- import { savingPlanService } from '@/services/api';
+-
+- const plan = await savingPlanService.addSavingPlan({
+-      name: 'Vacation',
+-      target_amount: 5000,
+-      deadline: '2026-12-31'
+- });
+- const plans = await savingPlanService.getUserSavingPlans();
+-
+- 6.  AI Insights
+- import { insightService } from '@/services/api';
+-
+- const insights = await insightService.getAIInsights();
+-
+- Error Handling:
+- ===============
+-
+- All services throw errors with the format:
+- {
+- message: 'Error description',
+- originalError: <original error object>
+- }
+-
+- Use errorHandler utilities:
+- import { errorHandler } from '@/services/api';
+-
+- try {
+- const categories = await categoryService.getCategories();
+- } catch (error) {
+- console.error(error.message);
+-
+- if (errorHandler.isAuthError(error)) {
+-     // Handle auth error
+- } else if (errorHandler.isValidationError(error)) {
+-     // Handle validation error
+- }
+- }
+-
+- Environment Setup:
+- ==================
+-
+- Create a .env file in the client folder with:
+-
+- VITE_API_BASE_URL=http://localhost:8000
+-
+- This overrides the default API base URL (http://localhost:8000).
+-
+- Token Management:
+- =================
+-
+- Tokens are automatically managed:
+- - Stored in localStorage: 'access_token', 'refresh_token'
+- - Automatically added to request headers
+- - Auto-refreshed on 401 response
+- - Cleared on logout
+    \*/
+
+export {};
