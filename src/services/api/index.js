@@ -10,13 +10,6 @@
  */
 
 export { default as axiosInstance } from "./axiosInstance";
-export { default as authService } from "./authService";
-export { default as categoryService } from "./categoryService";
-export { default as transactionService } from "./transactionService";
-export { default as budgetService } from "./budgetService";
-export { default as savingPlanService } from "./savingPlanService";
-export { default as insightService } from "./insightService";
-export { default as errorHandler } from "./errorHandler";
 export { API_CONFIG } from "./config";
 
 // Named exports for convenience

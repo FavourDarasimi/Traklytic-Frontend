@@ -17,6 +17,11 @@ export const API_CONFIG = {
       LOGOUT: "/auth/v1/logout/",
       REGISTER: "/auth/v1/users/",
       CURRENT_USER: "/auth/v1/user/",
+      PASSWORD_RESET: "/auth/v1/users/reset_password/",
+      PASSWORD_RESET_CONFIRM: "/auth/v1/users/reset_password_confirm/",
+      CHANGE_PASSWORD: "/auth/v1/users/set_password/",
+      RESEND_ACTIVATION: "/auth/v1/users/resend_activation/",
+      ACTIVATE: "/auth/v1/users/activation/",
     },
     // Tracker endpoints
     TRACKER: {

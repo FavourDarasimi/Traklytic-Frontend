@@ -58,6 +58,7 @@ export const register = async (userData) => {
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw {
       message: getErrorMessage(error),
       originalError: error,
@@ -162,6 +163,106 @@ export const getAccessToken = () => {
   return localStorage.getItem("access_token");
 };
 
+/**
+ * Request password reset email
+ * @param {string} email - User email
+ * @returns {Promise<Object>} - Response message
+ */
+export const requestPasswordReset = async (email) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.AUTH.PASSWORD_RESET,
+      { email },
+    );
+    return response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Confirm password reset with token
+ * @param {Object} data - { uid, token, new_password, re_new_password }
+ * @returns {Promise<Object>} - Response message
+ */
+export const confirmPasswordReset = async (data) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.AUTH.PASSWORD_RESET_CONFIRM,
+      data,
+    );
+    return response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Resend activation email
+ * @param {string} email - User email
+ * @returns {Promise<Object>} - Response message
+ */
+export const resendActivationEmail = async (email) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.AUTH.RESEND_ACTIVATION,
+      { email },
+    );
+    return response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Activate user account with token
+ * @param {Object} data - { uid, token }
+ * @returns {Promise<Object>} - Response message
+ */
+export const activateAccount = async (data) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.AUTH.ACTIVATE,
+      data,
+    );
+    return response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Change password for authenticated user
+ * @param {Object} data - { old_password, new_password, re_new_password }
+ * @returns {Promise<Object>} - Response message
+ */
+export const changePassword = async (data) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.AUTH.CHANGE_PASSWORD,
+      data,
+    );
+    return response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
 export default {
   login,
   register,
@@ -170,4 +271,9 @@ export default {
   refreshAccessToken,
   isAuthenticated,
   getAccessToken,
+  requestPasswordReset,
+  confirmPasswordReset,
+  resendActivationEmail,
+  activateAccount,
+  changePassword,
 };
