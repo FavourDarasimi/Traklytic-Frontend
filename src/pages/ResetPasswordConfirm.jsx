@@ -66,9 +66,13 @@ const ResetPasswordConfirm = () => {
       return;
     }
 
+    // URL-decode the parameters
+    const decodedUid = decodeURIComponent(uid);
+    const decodedToken = decodeURIComponent(token);
+
     const result = await confirmPasswordReset({
-      uid,
-      token,
+      uid: decodedUid,
+      token: decodedToken,
       new_password: newPassword,
       re_new_password: confirmPassword,
     });

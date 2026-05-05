@@ -23,6 +23,7 @@ const VerifyEmail = () => {
         setMessage("Invalid verification link. Missing required parameters.");
         return;
       }
+      console.log(`uid: ${uid}, token: ${token}`);
 
       try {
         const result = await activateAccount(uid, token);

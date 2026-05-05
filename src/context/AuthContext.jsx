@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
       if (token) {
         try {
-          const currentUser = await authService.getCurrentUser();
+          const currentUser = await authService.getCurrentUser(token);
           setUser(currentUser);
           setIsAuthenticated(true);
           setError(null);
@@ -60,8 +60,9 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      await authService.login(email, password);
-      const currentUser = await authService.getCurrentUser();
+      const login = await authService.login(email, password);
+      console.log("Login successful:", login.access_token);
+      const currentUser = await authService.getCurrentUser(login.access_token);
 
       setUser(currentUser);
       setIsAuthenticated(true);
@@ -69,6 +70,7 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: currentUser };
     } catch (err) {
       const errorMessage = err.message || "Login failed";
+      console.log("Login error:", errorMessage);
       setError(errorMessage);
       setUser(null);
       setIsAuthenticated(false);

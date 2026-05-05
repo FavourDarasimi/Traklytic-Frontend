@@ -16,7 +16,7 @@ export const API_CONFIG = {
       REFRESH: "/auth/v1/jwt/refresh/",
       LOGOUT: "/auth/v1/logout/",
       REGISTER: "/auth/v1/users/",
-      CURRENT_USER: "/auth/v1/user/",
+      CURRENT_USER: "/auth/v1/users/me/",
       PASSWORD_RESET: "/auth/v1/users/reset_password/",
       PASSWORD_RESET_CONFIRM: "/auth/v1/users/reset_password_confirm/",
       CHANGE_PASSWORD: "/auth/v1/users/set_password/",

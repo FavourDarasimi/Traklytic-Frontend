@@ -70,7 +70,7 @@ export const register = async (userData) => {
  * Get current user info
  * @returns {Promise<Object>} - Current user data
  */
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (token) => {
   try {
     const response = await axiosInstance.get(
       API_CONFIG.ENDPOINTS.AUTH.CURRENT_USER,
@@ -225,14 +225,14 @@ export const resendActivationEmail = async (email) => {
 
 /**
  * Activate user account with token
- * @param {Object} data - { uid, token }
+ *  { uid, token }
  * @returns {Promise<Object>} - Response message
  */
-export const activateAccount = async (data) => {
+export const activateAccount = async ({ uid, token }) => {
   try {
     const response = await axiosInstance.post(
       API_CONFIG.ENDPOINTS.AUTH.ACTIVATE,
-      data,
+      { uid, token },
     );
     return response.data;
   } catch (error) {
