@@ -54,10 +54,13 @@ axiosInstance.interceptors.response.use(
         );
 
         const newAccessToken = response.data.access;
+        const newRefreshToken = response.data.refresh;
+
         localStorage.setItem("access_token", newAccessToken);
+        localStorage.setItem("refresh_token", newRefreshToken);
 
         // Retry original request with new token
-        originalRequest.headers.Authorization = `JWT ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         // Refresh failed - clear tokens and redirect to login

@@ -22,7 +22,7 @@ ChartJS.register(
   Legend,
 );
 
-const ExpensesStatistics = () => {
+const ExpensesStatistics = ({ chartData = null }) => {
   const [period, setPeriod] = useState("day");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,13 +42,17 @@ const ExpensesStatistics = () => {
   };
 
   const currentData = dataByPeriod[period];
+  const activeChartData =
+    chartData?.labels?.length && chartData?.data?.length
+      ? chartData
+      : currentData;
 
   const data = {
-    labels: currentData.labels,
+    labels: activeChartData.labels,
     datasets: [
       {
         label: "Expenses",
-        data: currentData.data,
+        data: activeChartData.data,
         borderColor: "rgb(22, 163, 74)",
         backgroundColor: "rgba(22, 163, 74, 0.1)",
         borderWidth: 2,

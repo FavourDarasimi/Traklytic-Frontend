@@ -1,16 +1,13 @@
 import React from "react";
 import { Pencil } from "lucide-react";
 
-const MonthlyExpenses = () => {
-  const expenses = [
-    { name: "Internet", amount: "₦50,000" },
-    { name: "Groceries", amount: "₦50,000" },
-    { name: "Laundry", amount: "₦20,000" },
-    { name: "Services", amount: "₦50,000" },
-    { name: "Miscellaneous", amount: "₦50,000" },
-    { name: "Outings", amount: "₦100,000" },
-    { name: "Car", amount: "₦30,000" },
-  ];
+const MonthlyExpenses = ({ expenseDistribution = [] }) => {
+  const expenses = expenseDistribution.length
+    ? expenseDistribution.slice(0, 6).map((expense) => ({
+        name: expense.category || "Expense",
+        amount: `₦${expense.amount?.toLocaleString() ?? 0}`,
+      }))
+    : [{ name: "No data", amount: "₦0" }];
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-6 w-full">

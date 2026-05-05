@@ -49,6 +49,7 @@ export const API_CONFIG = {
 
       // AI Insights
       AI_INSIGHTS: "/api/v1/ai/insights/",
+      DASHBOARD_OVERVIEW: "/api/v1/dashboard/overview/",
     },
   },
 };

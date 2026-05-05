@@ -1,13 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa6";
 import { GoUpload } from "react-icons/go";
 import { FiSave } from "react-icons/fi";
 import Sarah from "../../assets/sarah.jpg";
 
-const Profile = () => {
+const Profile = ({ user }) => {
+  const [profile, setProfile] = useState({
+    username: "",
+    email: "",
+    age: "",
+    phoneNumber: "",
+    occupation: "",
+    lastName: "",
+    bio: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setProfile({
+        username: user.username || "",
+        email: user.email || "",
+        age: user.age || "",
+        phoneNumber: user.phone_number || "",
+        occupation: user.occupation || "",
+        lastName: user.last_name || "",
+        bio: user.bio || "",
+      });
+    }
+  }, [user]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="w-full">
-      {/* Section Header */}
       <div className="flex gap-x-3 items-center">
         <FaRegUser size={22} className="text-green-600 flex-shrink-0" />
         <h1 className="text-[20px] md:text-[22px] font-semibold">
@@ -15,10 +47,9 @@ const Profile = () => {
         </h1>
       </div>
       <p className="text-sm text-gray-500 mt-1">
-        Update your account profile information
+        Update your account profile information.
       </p>
 
-      {/* Avatar */}
       <div className="flex items-center gap-x-4 mt-5">
         <img
           src={Sarah}
@@ -33,20 +64,23 @@ const Profile = () => {
             </span>
             <input type="file" className="hidden" accept="image/*" />
           </label>
-          <p className="text-xs text-gray-400">JPG, PNG or GIF. Max size of 2MB.</p>
+          <p className="text-xs text-gray-400">
+            JPG, PNG or GIF. Max size of 2MB.
+          </p>
         </div>
       </div>
 
-      {/* Form */}
       <div className="mt-7">
-        <form className="space-y-4">
-          {/* Row 1 */}
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-medium text-[14px] text-gray-700 mb-1">
                 Username
               </label>
               <input
+                name="username"
+                value={profile.username}
+                onChange={handleChange}
                 type="text"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Username"
@@ -57,6 +91,9 @@ const Profile = () => {
                 Email
               </label>
               <input
+                name="email"
+                value={profile.email}
+                onChange={handleChange}
                 type="email"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Email"
@@ -64,13 +101,15 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Row 2 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-medium text-[14px] text-gray-700 mb-1">
                 Age
               </label>
               <input
+                name="age"
+                value={profile.age}
+                onChange={handleChange}
                 type="number"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Age"
@@ -81,6 +120,9 @@ const Profile = () => {
                 Phone Number
               </label>
               <input
+                name="phoneNumber"
+                value={profile.phoneNumber}
+                onChange={handleChange}
                 type="tel"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Phone Number"
@@ -88,13 +130,15 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Row 3 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-medium text-[14px] text-gray-700 mb-1">
                 Occupation
               </label>
               <input
+                name="occupation"
+                value={profile.occupation}
+                onChange={handleChange}
                 type="text"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Occupation"
@@ -105,6 +149,9 @@ const Profile = () => {
                 Last Name
               </label>
               <input
+                name="lastName"
+                value={profile.lastName}
+                onChange={handleChange}
                 type="text"
                 className="rounded-lg p-2.5 w-full h-[43px] border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm transition"
                 placeholder="Last Name"
@@ -112,19 +159,20 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Bio */}
           <div>
             <label className="block font-medium text-[14px] text-gray-700 mb-1">
               Bio
             </label>
             <textarea
+              name="bio"
+              value={profile.bio}
+              onChange={handleChange}
               className="rounded-lg p-2.5 w-full border border-gray-200 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 text-sm resize-none transition"
               placeholder="Tell us a little about yourself..."
               rows={3}
             />
           </div>
 
-          {/* Save */}
           <button
             type="submit"
             className="flex items-center gap-x-2 bg-green-600 text-white py-2 px-5 rounded-xl text-sm md:text-[15px] font-medium hover:bg-green-700 transition-colors mt-2"

@@ -19,4 +19,5 @@ export * as transactionService from "./transactionService";
 export * as budgetService from "./budgetService";
 export * as savingPlanService from "./savingPlanService";
 export * as insightService from "./insightService";
+export * as dashboardService from "./dashboardService";
 export * as errorHandler from "./errorHandler";

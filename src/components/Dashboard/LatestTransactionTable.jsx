@@ -22,8 +22,8 @@ const categoryConfig = {
   Default: { icon: CreditCard, bg: "bg-gray-50", color: "text-gray-500" },
 };
 
-const LatestTransactionTable = () => {
-  const transactions = [
+const LatestTransactionTable = ({ transactions: propTransactions }) => {
+  const defaultTransactions = [
     {
       id: 1,
       party_name: "Shoprite",
@@ -115,6 +115,11 @@ const LatestTransactionTable = () => {
       receipt: null,
     },
   ];
+
+  const transactions =
+    Array.isArray(propTransactions) && propTransactions.length
+      ? propTransactions
+      : defaultTransactions;
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden w-full">
       {/* Header */}
