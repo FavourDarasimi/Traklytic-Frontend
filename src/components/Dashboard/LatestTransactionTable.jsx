@@ -23,105 +23,13 @@ const categoryConfig = {
 };
 
 const LatestTransactionTable = ({ transactions: propTransactions }) => {
-  const defaultTransactions = [
-    {
-      id: 1,
-      party_name: "Shoprite",
-      amount: 3200,
-      type: "debit",
-      category: { id: 1, name: "Food" },
-      notes: "Weekly groceries",
-      transaction_date: "2025-09-06T12:21:00Z",
-      recurring: false,
-      add_savings: false,
-      savings_percentage: null,
-      savings: null,
-      savings_note: null,
-      receipt: null,
-    },
-    {
-      id: 2,
-      party_name: "Employer Ltd",
-      amount: 150000,
-      type: "credit",
-      category: { id: 2, name: "Income" },
-      notes: "Monthly salary",
-      transaction_date: "2025-09-05T09:00:00Z",
-      recurring: true,
-      add_savings: true,
-      savings_percentage: 20,
-      savings: { id: 1, name: "Emergency Fund" },
-      savings_note: "Auto-saving 20% of salary",
-      receipt: null,
-    },
-    {
-      id: 3,
-      party_name: "DSTV",
-      amount: 5000,
-      type: "debit",
-      category: { id: 3, name: "Bills" },
-      notes: null,
-      transaction_date: "2025-09-04T14:10:00Z",
-      recurring: true,
-      add_savings: false,
-      savings_percentage: null,
-      savings: null,
-      savings_note: null,
-      receipt: null,
-    },
-    {
-      id: 4,
-      party_name: "Uber",
-      amount: 2500,
-      type: "debit",
-      category: { id: 4, name: "Transport" },
-      notes: "Ride to airport",
-      transaction_date: "2025-09-03T18:44:00Z",
-      recurring: false,
-      add_savings: false,
-      savings_percentage: null,
-      savings: null,
-      savings_note: null,
-      receipt: null,
-    },
-    {
-      id: 5,
-      party_name: "Freelance Client",
-      amount: 50000,
-      type: "credit",
-      category: { id: 2, name: "Income" },
-      notes: "UI design project",
-      transaction_date: "2025-09-02T11:00:00Z",
-      recurring: false,
-      add_savings: true,
-      savings_percentage: 10,
-      savings: { id: 2, name: "Vacation Fund" },
-      savings_note: "Saving towards Bali trip",
-      receipt: null,
-    },
-    {
-      id: 6,
-      party_name: "GTBank",
-      amount: 10000,
-      type: "debit",
-      category: { id: 5, name: "Savings" },
-      notes: "Manual savings transfer",
-      transaction_date: "2025-09-01T08:30:00Z",
-      recurring: true,
-      add_savings: false,
-      savings_percentage: null,
-      savings: { id: 1, name: "Emergency Fund" },
-      savings_note: null,
-      receipt: null,
-    },
-  ];
-
   const transactions =
     Array.isArray(propTransactions) && propTransactions.length
       ? propTransactions
-      : defaultTransactions;
+      : [];
+
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden w-full">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden w-full flex flex-col min-h-[400px]">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-5">
         <div>
@@ -133,15 +41,26 @@ const LatestTransactionTable = ({ transactions: propTransactions }) => {
 
       <div className="border-t border-gray-100" />
 
-      {/* List */}
-      <div>
-        {transactions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-            <CreditCard size={32} className="mb-2 opacity-40" />
-            <p className="text-sm">No transactions yet</p>
+      {/* List or Empty State */}
+      {transactions.length === 0 ? (
+        <div className="flex-1 flex flex-col items-center justify-center min-h-[320px]">
+          <div className="flex flex-col items-center gap-3">
+            <div className="p-3 rounded-full bg-gray-100">
+              <CreditCard size={24} className="text-gray-400" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-medium text-gray-600 mb-1">
+                No transactions yet
+              </p>
+              <p className="text-xs text-gray-400">
+                Add a transaction to get started
+              </p>
+            </div>
           </div>
-        ) : (
-          transactions.slice(0, 5).map((tx, i) => {
+        </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto">
+          {transactions.slice(0, 5).map((tx, i) => {
             const isCredit = tx.type === "credit";
             const categoryName = tx.category?.name ?? "Default";
             const config =
@@ -206,9 +125,9 @@ const LatestTransactionTable = ({ transactions: propTransactions }) => {
                 </div>
               </div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };

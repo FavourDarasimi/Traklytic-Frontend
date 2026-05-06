@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, TrendingUp } from "lucide-react";
 
 ChartJS.register(
   CategoryScale,
@@ -46,6 +46,8 @@ const ExpensesStatistics = ({ chartData = null }) => {
     chartData?.labels?.length && chartData?.data?.length
       ? chartData
       : currentData;
+
+  const hasBackendData = chartData?.labels?.length && chartData?.data?.length;
 
   const data = {
     labels: activeChartData.labels,
@@ -115,7 +117,7 @@ const ExpensesStatistics = ({ chartData = null }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 w-full flex flex-col h-full">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 w-full flex flex-col min-h-[400px]">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-base md:text-[19px] font-semibold">
           Expenses Statistics
@@ -153,9 +155,28 @@ const ExpensesStatistics = ({ chartData = null }) => {
           )}
         </div>
       </div>
-      <div className="relative flex-1 min-h-[260px]">
-        <Line data={data} options={options} />
-      </div>
+
+      {!hasBackendData ? (
+        <div className="flex-1 flex flex-col items-center justify-center min-h-[320px]">
+          <div className="flex flex-col items-center gap-3">
+            <div className="p-3 rounded-full bg-gray-100">
+              <TrendingUp size={24} className="text-gray-400" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-medium text-gray-600 mb-1">
+                No expense data yet
+              </p>
+              <p className="text-xs text-gray-400">
+                Add transactions to see your expense trends
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="relative flex-1 min-h-[320px]">
+          <Line data={data} options={options} />
+        </div>
+      )}
     </div>
   );
 };
