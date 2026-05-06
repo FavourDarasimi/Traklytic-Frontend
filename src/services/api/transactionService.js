@@ -14,9 +14,17 @@ import { getErrorMessage } from "./errorHandler";
  */
 export const addTransaction = async (transactionData) => {
   try {
+    const config = {};
+    if (transactionData instanceof FormData) {
+      config.headers = {
+        "Content-Type": "multipart/form-data",
+      };
+    }
+
     const response = await axiosInstance.post(
       API_CONFIG.ENDPOINTS.TRACKER.ADD_TRANSACTION,
       transactionData,
+      config,
     );
 
     // Backend returns { success, message, data }
@@ -47,6 +55,51 @@ export const uploadReceipt = async (formData) => {
     );
 
     // Backend returns { success, message, data }
+    return response.data.data || response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Parse receipt and extract transaction data (without creating transaction)
+ * @param {FormData} formData - FormData containing receipt image or PDF
+ * @returns {Promise<Object>} - Extracted transaction data
+ */
+export const parseReceipt = async (formData) => {
+  try {
+    const response = await axiosInstance.post(
+      API_CONFIG.ENDPOINTS.TRACKER.PARSE_RECEIPT,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+
+    // Backend returns { success, message, data }
+    return response.data.data || response.data;
+  } catch (error) {
+    throw {
+      message: getErrorMessage(error),
+      originalError: error,
+    };
+  }
+};
+
+/**
+ * Get user transactions
+ * @returns {Promise<Array>} - Transaction list
+ */
+export const getTransactions = async () => {
+  try {
+    const response = await axiosInstance.get(
+      API_CONFIG.ENDPOINTS.TRACKER.GET_TRANSACTIONS,
+    );
     return response.data.data || response.data;
   } catch (error) {
     throw {

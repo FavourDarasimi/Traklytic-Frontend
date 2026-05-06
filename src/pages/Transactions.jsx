@@ -7,7 +7,9 @@ import TransactionFilters from "../components/Transactions/TransactionFilters";
 import TransactionTableView from "../components/Transactions/TransactionTableView";
 import EmptyState from "../components/Transactions/EmptyState";
 import Pagination from "../components/Transactions/Pagination";
-import QuickAddModal from "../components/Transactions/QuickAddModal";
+import AddTransactionForm from "../components/AddTransactionForm";
+import * as transactionService from "../services/api/transactionService";
+import * as categoryService from "../services/api/categoryService";
 
 const Transactions = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -25,6 +27,11 @@ const Transactions = () => {
     dateFrom: "",
     dateTo: "",
   });
+  const [transactions, setTransactions] = useState([]);
+  const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
   const containerRef = useRef(null);
 
@@ -44,159 +51,70 @@ const Transactions = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isFilterOpen]);
 
-  // Sample transactions data
-  const allTransactions = [
-    {
-      id: 1,
-      name: "Annette Block",
-      date: "20 Feb 2025 AT 10:00 AM",
-      type: "Income",
-      amount: "$948.55",
-      category: "Salary",
-    },
-    {
-      id: 2,
-      name: "Wade Warren",
-      date: "10 May 2025 AT 10:00 PM",
-      type: "Income",
-      amount: "$328.85",
-      category: "Salary",
-    },
-    {
-      id: 3,
-      name: "Jacks Cooper",
-      date: "20 Aug 2025 AT 03:00 AM",
-      type: "Expense",
-      amount: "$446.61",
-      category: "Food",
-    },
-    {
-      id: 4,
-      name: "Henry Roberts",
-      date: "24 Jan 2025 AT 12:00 PM",
-      type: "Income",
-      amount: "$778.35",
-      category: "Salary",
-    },
-    {
-      id: 5,
-      name: "Kristin Weston",
-      date: "18 Dec 2025 AT 05:00 AM",
-      type: "Expense",
-      amount: "$302.87",
-      category: "Food",
-    },
-    {
-      id: 6,
-      name: "Bestie Cooper",
-      date: "30 Sep 2025 AT 06:00 PM",
-      type: "Income",
-      amount: "$106.58",
-      category: "Salary",
-    },
-    {
-      id: 7,
-      name: "Theresa Webb",
-      date: "28 Mar 2025 AT 10:00 AM",
-      type: "Expense",
-      amount: "$219.78",
-      category: "Food",
-    },
-    {
-      id: 8,
-      name: "Ariene McCoy",
-      date: "08 Nov 2025 AT 03:00 PM",
-      type: "Expense",
-      amount: "$105.55",
-      category: "Food",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-    {
-      id: 9,
-      name: "Jackson Toper",
-      date: "12 Oct 2025 AT 03:00 AM",
-      type: "Income",
-      amount: "$210.45",
-      category: "Salary",
-    },
-  ];
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      setIsTransactionsLoading(true);
+      setFetchError(null);
 
-  // Filter and search transactions
-  const filteredTransactions = allTransactions.filter((transaction) => {
-    const matchesSearch =
-      transaction.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.category.toLowerCase().includes(searchQuery.toLowerCase());
+      try {
+        const data = await transactionService.getTransactions();
+        setTransactions(Array.isArray(data) ? data : []);
+      } catch (error) {
+        setFetchError(error?.message || "Unable to load transactions.");
+      } finally {
+        setIsTransactionsLoading(false);
+      }
+    };
 
+    fetchTransactions();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setIsCategoriesLoading(true);
+      try {
+        const data = await categoryService.getCategories();
+        setCategories(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load categories", error);
+      } finally {
+        setIsCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const getTransactionCategory = (transaction) => {
+    if (!transaction) return "Uncategorized";
+    if (typeof transaction.category === "string") return transaction.category;
+    return transaction.category?.name || "Uncategorized";
+  };
+
+  const formatDate = (value) => {
+    if (!value) return "";
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return "";
+    return parsed.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const filteredTransactions = transactions.filter((transaction) => {
+    const name = (transaction.party_name || "").toLowerCase();
+    const category = getTransactionCategory(transaction).toLowerCase();
+    const query = searchQuery.toLowerCase();
+
+    const matchesSearch = name.includes(query) || category.includes(query);
     const matchesType =
       filters.type === "all" ||
-      transaction.type.toLowerCase() === filters.type.toLowerCase();
-
+      (transaction.type || "").toLowerCase() === filters.type.toLowerCase();
     const matchesCategory =
-      filters.category === "all" ||
-      transaction.category.toLowerCase() === filters.category.toLowerCase();
+      filters.category === "all" || category === filters.category.toLowerCase();
 
     return matchesSearch && matchesType && matchesCategory;
   });
@@ -213,7 +131,13 @@ const Transactions = () => {
     const csvContent = [
       headers.join(","),
       ...filteredTransactions.map((t) =>
-        [t.name, t.date, t.type, t.category, t.amount].join(","),
+        [
+          t.party_name || "",
+          formatDate(t.transaction_date || t.created_at),
+          t.type || "",
+          getTransactionCategory(t),
+          t.amount != null ? t.amount : "",
+        ].join(","),
       ),
     ].join("\n");
 
@@ -224,10 +148,18 @@ const Transactions = () => {
     link.click();
   };
 
-  const handleAddTransaction = (data) => {
-    console.log("New transaction:", data);
-    // TODO: Add API call to save transaction
-    setIsModalOpen(false);
+  const handleAddTransaction = async (data) => {
+    setFetchError(null);
+    try {
+      const created = await transactionService.addTransaction(data);
+      if (created) {
+        setTransactions((prev) => [created, ...prev]);
+        setCurrentPage(1);
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      setFetchError(error?.message || "Unable to save transaction.");
+    }
   };
 
   return (
@@ -261,9 +193,17 @@ const Transactions = () => {
           transition={{ delay: 0.1 }}
         >
           <SummaryStats
-            totalTransactions={allTransactions.length}
-            totalIncome={125000}
-            totalExpenses={45000}
+            totalTransactions={transactions.length}
+            totalIncome={transactions.reduce(
+              (sum, txn) =>
+                sum + (txn.type === "Income" ? Number(txn.amount || 0) : 0),
+              0,
+            )}
+            totalExpenses={transactions.reduce(
+              (sum, txn) =>
+                sum + (txn.type === "Expense" ? Number(txn.amount || 0) : 0),
+              0,
+            )}
           />
         </motion.div>
 
@@ -293,9 +233,18 @@ const Transactions = () => {
           )}
 
           {/* Transactions Table or Empty State */}
-          {paginatedTransactions.length > 0 ? (
+          {fetchError && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              {fetchError}
+            </div>
+          )}
+
+          {paginatedTransactions.length > 0 || isTransactionsLoading ? (
             <>
-              <TransactionTableView transactions={paginatedTransactions} />
+              <TransactionTableView
+                transactions={paginatedTransactions}
+                isLoading={isTransactionsLoading}
+              />
 
               {/* Pagination */}
               {totalPages > 1 && (
@@ -314,11 +263,11 @@ const Transactions = () => {
         </motion.div>
       </div>
 
-      {/* Quick Add Modal */}
-      <QuickAddModal
+      <AddTransactionForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddTransaction}
+        categories={categories}
       />
     </div>
   );

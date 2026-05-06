@@ -31,7 +31,9 @@ export const API_CONFIG = {
 
       // Transactions
       ADD_TRANSACTION: "/api/v1/add/transaction/",
+      GET_TRANSACTIONS: "/api/v1/get/transactions/",
       UPLOAD_RECEIPT: "/api/v1/transaction/upload/receipt/",
+      PARSE_RECEIPT: "/api/v1/transaction/upload/receipt/",
 
       // General Budget
       ADD_GENERAL_BUDGET: "/api/v1/add/general/budget/",

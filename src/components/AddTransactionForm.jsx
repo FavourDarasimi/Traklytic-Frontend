@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X, Upload } from "lucide-react";
 
-const AddTransactionForm = ({ isOpen, onClose }) => {
+const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
   const [formData, setFormData] = useState({
     party_name: "",
     amount: "",
-    type: "expense",
+    type: "Income",
     category: "",
     notes: "",
     receipt: null,
@@ -15,13 +15,15 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
     recurring: false,
     savings_note: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const transactionTypes = [
-    { value: "income", label: "Income" },
-    { value: "expense", label: "Expense" },
+    { value: "Income", label: "Income" },
+    { value: "Expense", label: "Expense" },
   ];
 
-  const categories = [
+  const fallbackCategories = [
     { id: 1, name: "Groceries" },
     { id: 2, name: "Internet" },
     { id: 3, name: "Utilities" },
@@ -29,6 +31,15 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
     { id: 5, name: "Entertainment" },
     { id: 6, name: "Other" },
   ];
+
+  const availableCategories =
+    categories.length > 0 ? categories : fallbackCategories;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setFormError("");
+    setSubmitting(false);
+  }, [isOpen]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -45,11 +56,51 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // API call will go here
-    onClose();
+    setFormError("");
+    setSubmitting(true);
+
+    try {
+      let payload;
+      if (formData.receipt) {
+        payload = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+          if (key === "receipt") {
+            if (value) payload.append("receipt", value);
+            return;
+          }
+          if (value !== null && value !== undefined) {
+            payload.append(key, value);
+          }
+        });
+      } else {
+        payload = {
+          ...formData,
+          amount: formData.amount === "" ? null : Number(formData.amount),
+        };
+      }
+
+      await onSubmit(payload);
+      setFormData({
+        party_name: "",
+        amount: "",
+        type: "Income",
+        category: "",
+        notes: "",
+        receipt: null,
+        transaction_date: new Date().toISOString().split("T")[0],
+        add_savings: false,
+        savings_percentage: "",
+        recurring: false,
+        savings_note: "",
+      });
+      onClose();
+    } catch (error) {
+      setFormError(error?.message || "Unable to add transaction.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -57,7 +108,7 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-40 "
+          className="fixed inset-0 bg-black/40 z-[50] "
           onClick={onClose}
           aria-hidden="true"
         ></div>
@@ -65,7 +116,7 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
 
       {/* Form Drawer */}
       <div
-        className={`fixed top-0 right-0 h-screen w-80 md:w-[400px]  bg-white z-50 transform transition-all duration-300 ease-in-out shadow-xl overflow-y-auto ${
+        className={`fixed top-0 right-0 h-screen w-80 md:w-[400px]  bg-white z-[60] transform transition-all duration-300 ease-in-out shadow-xl overflow-y-auto ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -85,6 +136,11 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
 
         {/* Form Content */}
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
+          {formError && (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              {formError}
+            </div>
+          )}
           {/* Party Name */}
           <div>
             <label className="text-[14px] font-medium text-gray-600 mb-2 block">
@@ -147,7 +203,7 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
               className="w-full px-3 py-2 h-[44px] border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
             >
               <option value="">Select a category</option>
-              {categories.map((cat) => (
+              {availableCategories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
@@ -283,9 +339,10 @@ const AddTransactionForm = ({ isOpen, onClose }) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition-colors mt-6"
+            disabled={submitting}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition-colors mt-6 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Add Transaction
+            {submitting ? "Saving..." : "Add Transaction"}
           </button>
         </form>
       </div>

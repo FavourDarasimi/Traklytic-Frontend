@@ -24,6 +24,27 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
     return colors[category?.toLowerCase()] || colors.salary;
   };
 
+  const formatDate = (value) => {
+    if (!value) return "N/A";
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return "N/A";
+    return parsed.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const getCategoryName = (transaction) => {
+    if (!transaction) return "Uncategorized";
+    if (typeof transaction.category === "string") {
+      return transaction.category || "Uncategorized";
+    }
+    return transaction.category?.name || "Uncategorized";
+  };
+
   // Desktop Table View
   const DesktopTable = () => (
     <div className="hidden md:block overflow-x-auto border border-gray-200 rounded-xl bg-white">
@@ -60,12 +81,16 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
             >
               <td className="px-6 py-4 whitespace-nowrap">
                 <p className="text-sm font-medium text-gray-900">
-                  {transaction.name}
+                  {transaction.party_name || "Unknown merchant"}
                 </p>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex px-3 py-1 rounded-lg text-xs font-medium text-gray-900 bg-gray-100">
-                  {transaction.category}
+                <span
+                  className={`inline-flex px-3 py-1 rounded-lg text-xs font-medium ${
+                    getCategoryColor(getCategoryName(transaction)).text
+                  } ${getCategoryColor(getCategoryName(transaction)).bg}`}
+                >
+                  {getCategoryName(transaction)}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -87,11 +112,15 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
                   }`}
                 >
                   {transaction.type === "Income" ? "+" : "-"}
-                  {transaction.amount}
+                  {transaction.amount?.toLocaleString() ?? "0"}
                 </p>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <p className="text-sm text-gray-600">{transaction.date}</p>
+                <p className="text-sm text-gray-600">
+                  {formatDate(
+                    transaction.transaction_date || transaction.created_at,
+                  )}
+                </p>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <motion.div className="flex gap-2">
@@ -122,9 +151,13 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-sm font-semibold text-gray-900">
-                {transaction.name}
+                {transaction.party_name || "Unknown merchant"}
               </p>
-              <p className="text-xs text-gray-500">{transaction.date}</p>
+              <p className="text-xs text-gray-500">
+                {formatDate(
+                  transaction.transaction_date || transaction.created_at,
+                )}
+              </p>
             </div>
             <div className="text-right">
               <p
@@ -135,7 +168,7 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
                 }`}
               >
                 {transaction.type === "Income" ? "+" : "-"}
-                {transaction.amount}
+                {transaction.amount?.toLocaleString() ?? "0"}
               </p>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium mt-1 text-gray-900 bg-gray-100">
                 {transaction.type === "Income" ? (
@@ -151,7 +184,7 @@ const TransactionTableView = ({ transactions = [], isLoading = false }) => {
           {/* Category and Actions */}
           <div className="flex justify-between items-center pt-2 border-t border-gray-100">
             <span className="inline-flex px-2 py-1 rounded text-xs font-medium text-gray-900 bg-gray-100">
-              {transaction.category}
+              {getCategoryName(transaction)}
             </span>
             <div className="relative">
               <button
