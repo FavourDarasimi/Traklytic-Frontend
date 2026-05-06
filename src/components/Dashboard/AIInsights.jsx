@@ -1,42 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Sparkles, ChevronRight } from "lucide-react";
 
-const DEFAULT_INSIGHTS = [
-  {
-    id: 1,
-    type: "warning",
-    iconColor: "text-red-500",
-    iconBg: "bg-red-50",
-    title: "High spending on Food",
-    description:
-      "You've spent 42% more on Food this month compared to last month. Consider setting a category budget.",
-    tag: "Spending",
-    tagColor: "bg-red-50 text-red-600",
-  },
-  {
-    id: 2,
-    type: "positive",
-    iconColor: "text-green-600",
-    iconBg: "bg-green-50",
-    title: "Income increased this week",
-    description:
-      "Your income is up ₦12,000 (22%) compared to last week. Great time to boost your savings.",
-    tag: "Income",
-    tagColor: "bg-green-50 text-green-600",
-  },
-  {
-    id: 3,
-    type: "tip",
-    iconColor: "text-amber-500",
-    iconBg: "bg-amber-50",
-    title: "Budget limit approaching",
-    description:
-      "You've used 80% of your monthly budget with 9 days remaining. Reduce discretionary spending to stay on track.",
-    tag: "Budget",
-    tagColor: "bg-amber-50 text-amber-600",
-  },
-];
-
 const AIInsights = ({ insights = [], isLoading = false }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -69,7 +33,7 @@ const AIInsights = ({ insights = [], isLoading = false }) => {
         };
       });
     }
-    return DEFAULT_INSIGHTS;
+    return [];
   }, [insights]);
 
   useEffect(() => {
@@ -83,6 +47,46 @@ const AIInsights = ({ insights = [], isLoading = false }) => {
 
     return () => clearInterval(timer);
   }, [insightItems.length]);
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 w-full flex flex-col">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-lg bg-gray-200 animate-pulse flex items-center justify-center flex-shrink-0">
+              <Sparkles size={13} className="text-gray-400" />
+            </div>
+            <div className="h-5 bg-gray-200 rounded animate-pulse w-24"></div>
+          </div>
+        </div>
+
+        <div className="flex gap-1.5 mb-4">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="flex-1 h-1 rounded-full bg-gray-200 animate-pulse"
+            ></div>
+          ))}
+        </div>
+
+        <div className="flex-1 flex flex-col justify-between min-h-[150px]">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-xl bg-gray-200 animate-pulse"></div>
+              <div className="h-5 bg-gray-200 rounded animate-pulse w-16"></div>
+            </div>
+            <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+            <div className="h-3 bg-gray-200 rounded animate-pulse w-full"></div>
+            <div className="h-3 bg-gray-200 rounded animate-pulse w-2/3"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (insightItems.length === 0) {
+    return null;
+  }
 
   const currentInsight = insightItems[activeIndex] || insightItems[0];
 
@@ -113,34 +117,26 @@ const AIInsights = ({ insights = [], isLoading = false }) => {
       </div>
 
       <div className="flex-1 flex flex-col justify-between min-h-[150px]">
-        {isLoading ? (
-          <div className="animate-pulse space-y-3 py-8">
-            <div className="h-4 rounded bg-gray-200 w-3/4" />
-            <div className="h-4 rounded bg-gray-200 w-full" />
-            <div className="h-4 rounded bg-gray-200 w-5/6" />
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <div
-                className={`w-9 h-9 rounded-xl ${currentInsight.iconBg} flex items-center justify-center`}
-              >
-                <div className={currentInsight.iconColor} />
-              </div>
-              <span
-                className={`text-[11px] md:text-xs font-medium px-2.5 py-1 rounded-full ${currentInsight.tagColor}`}
-              >
-                {currentInsight.tag}
-              </span>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div
+              className={`w-9 h-9 rounded-xl ${currentInsight.iconBg} flex items-center justify-center`}
+            >
+              <div className={currentInsight.iconColor} />
             </div>
-            <h3 className="text-sm md:text-[15px] font-semibold text-gray-900 leading-snug">
-              {currentInsight.title}
-            </h3>
-            <p className="text-xs md:text-[13px] text-gray-500 leading-relaxed">
-              {currentInsight.description}
-            </p>
+            <span
+              className={`text-[11px] md:text-xs font-medium px-2.5 py-1 rounded-full ${currentInsight.tagColor}`}
+            >
+              {currentInsight.tag}
+            </span>
           </div>
-        )}
+          <h3 className="text-sm md:text-[15px] font-semibold text-gray-900 leading-snug">
+            {currentInsight.title}
+          </h3>
+          <p className="text-xs md:text-[13px] text-gray-500 leading-relaxed">
+            {currentInsight.description}
+          </p>
+        </div>
 
         <div className="flex items-center justify-between mt-5">
           <div className="flex gap-1.5">

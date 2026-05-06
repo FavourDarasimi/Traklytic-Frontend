@@ -65,33 +65,6 @@ export const uploadReceipt = async (formData) => {
 };
 
 /**
- * Parse receipt and extract transaction data (without creating transaction)
- * @param {FormData} formData - FormData containing receipt image or PDF
- * @returns {Promise<Object>} - Extracted transaction data
- */
-export const parseReceipt = async (formData) => {
-  try {
-    const response = await axiosInstance.post(
-      API_CONFIG.ENDPOINTS.TRACKER.PARSE_RECEIPT,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      },
-    );
-
-    // Backend returns { success, message, data }
-    return response.data.data || response.data;
-  } catch (error) {
-    throw {
-      message: getErrorMessage(error),
-      originalError: error,
-    };
-  }
-};
-
-/**
  * Get user transactions
  * @returns {Promise<Array>} - Transaction list
  */

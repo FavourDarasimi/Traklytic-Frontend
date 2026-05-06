@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import MobileSidebar from "./MobileSidebar";
 import MobileNavbar from "./MobileNavbar";
 import AddTransactionForm from "../components/AddTransactionForm";
+import * as categoryService from "../services/api/categoryService";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await categoryService.getCategories();
+        setCategories(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load categories", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -48,6 +62,7 @@ const MainLayout = () => {
       <AddTransactionForm
         isOpen={showAddTransaction}
         onClose={() => setShowAddTransaction(false)}
+        categories={categories}
       />
     </div>
   );

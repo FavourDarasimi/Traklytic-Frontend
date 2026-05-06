@@ -153,7 +153,15 @@ const Transactions = () => {
     try {
       const created = await transactionService.addTransaction(data);
       if (created) {
-        setTransactions((prev) => [created, ...prev]);
+        // Find the category object from the categories list
+        const categoryObj = categories.find(
+          (cat) => cat.id === created.category,
+        );
+        const transactionWithCategory = {
+          ...created,
+          category: categoryObj || created.category, // Use object if found, otherwise keep ID
+        };
+        setTransactions((prev) => [transactionWithCategory, ...prev]);
         setCurrentPage(1);
         setIsModalOpen(false);
       }

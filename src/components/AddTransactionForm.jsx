@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X, Upload } from "lucide-react";
+import * as transactionService from "../services/api/transactionService";
 
 const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
   const [formData, setFormData] = useState({
@@ -17,28 +18,22 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
+  const [receiptParsing, setReceiptParsing] = useState(false);
+  const [receiptParseError, setReceiptParseError] = useState("");
 
   const transactionTypes = [
     { value: "Income", label: "Income" },
     { value: "Expense", label: "Expense" },
   ];
 
-  const fallbackCategories = [
-    { id: 1, name: "Groceries" },
-    { id: 2, name: "Internet" },
-    { id: 3, name: "Utilities" },
-    { id: 4, name: "Transportation" },
-    { id: 5, name: "Entertainment" },
-    { id: 6, name: "Other" },
-  ];
-
-  const availableCategories =
-    categories.length > 0 ? categories : fallbackCategories;
+  const availableCategories = categories;
 
   useEffect(() => {
     if (!isOpen) return;
     setFormError("");
     setSubmitting(false);
+    setReceiptParsing(false);
+    setReceiptParseError("");
   }, [isOpen]);
 
   const handleChange = (e) => {
@@ -49,39 +44,90 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
     }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
     setFormData((prev) => ({
       ...prev,
-      receipt: e.target.files[0],
+      receipt: file,
     }));
+
+    // Reset previous states
+    setReceiptParseError("");
+    setReceiptParsing(true);
+
+    // Create FormData for receipt parsing
+    const formData = new FormData();
+    formData.append("receipt", file);
+
+    try {
+      // Call the parse receipt endpoint
+      const extractedData = await transactionService.uploadReceipt(formData);
+
+      // Populate form with extracted data
+      setFormData((prev) => ({
+        ...prev,
+        party_name: extractedData.party_name || prev.party_name,
+        amount: extractedData.amount || prev.amount,
+        type: extractedData.type || prev.type,
+        category: extractedData.category || prev.category,
+        notes: extractedData.notes || prev.notes,
+        transaction_date:
+          extractedData.transaction_date || prev.transaction_date,
+      }));
+    } catch (error) {
+      console.error("Failed to parse receipt:", error);
+      setReceiptParseError("Parsing not available right now");
+    } finally {
+      setReceiptParsing(false);
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleAddTransaction = async (e) => {
     e.preventDefault();
     setFormError("");
     setSubmitting(true);
 
     try {
       let payload;
+
+      // Normalize values FIRST
+      const normalizedData = {
+        ...formData,
+        amount: formData.amount ? Number(formData.amount) : null,
+        category: formData.category ? Number(formData.category) : null,
+        savings_percentage: formData.savings_percentage
+          ? Number(formData.savings_percentage)
+          : null,
+      };
+
       if (formData.receipt) {
         payload = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
+
+        Object.entries(normalizedData).forEach(([key, value]) => {
           if (key === "receipt") {
             if (value) payload.append("receipt", value);
             return;
           }
-          if (value !== null && value !== undefined) {
+
+          // 🚨 IMPORTANT: skip empty values
+          if (value !== null && value !== "" && value !== undefined) {
             payload.append(key, value);
           }
         });
       } else {
-        payload = {
-          ...formData,
-          amount: formData.amount === "" ? null : Number(formData.amount),
-        };
+        payload = normalizedData;
       }
 
-      await onSubmit(payload);
+      const created = await transactionService.addTransaction(payload);
+
+      // ✅ Update parent (MainLayout or wherever)
+      if (onSubmit) {
+        onSubmit(created);
+      }
+
+      // Reset form
       setFormData({
         party_name: "",
         amount: "",
@@ -95,13 +141,62 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
         recurring: false,
         savings_note: "",
       });
+
       onClose();
     } catch (error) {
-      setFormError(error?.message || "Unable to add transaction.");
+      console.log(error);
+      setFormError(error?.message || "Unable to save transaction.");
     } finally {
       setSubmitting(false);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setFormError("");
+  //   setSubmitting(true);
+
+  //   try {
+  //     let payload;
+  //     if (formData.receipt) {
+  //       payload = new FormData();
+  //       Object.entries(formData).forEach(([key, value]) => {
+  //         if (key === "receipt") {
+  //           if (value) payload.append("receipt", value);
+  //           return;
+  //         }
+  //         if (value !== null && value !== undefined) {
+  //           payload.append(key, value);
+  //         }
+  //       });
+  //     } else {
+  //       payload = {
+  //         ...formData,
+  //         amount: formData.amount === "" ? null : Number(formData.amount),
+  //       };
+  //     }
+
+  //     await handleAddTransaction(payload);
+  //     setFormData({
+  //       party_name: "",
+  //       amount: "",
+  //       type: "Income",
+  //       category: "",
+  //       notes: "",
+  //       receipt: null,
+  //       transaction_date: new Date().toISOString().split("T")[0],
+  //       add_savings: false,
+  //       savings_percentage: "",
+  //       recurring: false,
+  //       savings_note: "",
+  //     });
+  //     onClose();
+  //   } catch (error) {
+  //     setFormError(error?.message || "Unable to add transaction.");
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
 
   return (
     <>
@@ -135,7 +230,7 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
         </div>
 
         {/* Form Content */}
-        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <form className="p-4 space-y-4">
           {formError && (
             <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
               {formError}
@@ -258,7 +353,28 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
                 className="hidden"
               />
             </label>
-            {formData.receipt && (
+
+            {/* Loading Progress */}
+            {receiptParsing && (
+              <div className="mt-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full animate-pulse w-full"></div>
+                  </div>
+                  <span className="text-xs text-gray-600">Parsing...</span>
+                </div>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {receiptParseError && (
+              <div className="mt-2 rounded-lg border border-red-200 bg-red-50 p-2">
+                <p className="text-xs text-red-700">{receiptParseError}</p>
+              </div>
+            )}
+
+            {/* File Name */}
+            {formData.receipt && !receiptParsing && (
               <p className="text-xs text-gray-600 mt-1">
                 ✓ {formData.receipt.name}
               </p>
@@ -339,6 +455,7 @@ const AddTransactionForm = ({ isOpen, onClose, onSubmit, categories = [] }) => {
           {/* Submit Button */}
           <button
             type="submit"
+            onClick={handleAddTransaction}
             disabled={submitting}
             className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition-colors mt-6 disabled:cursor-not-allowed disabled:opacity-60"
           >

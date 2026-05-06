@@ -19,6 +19,7 @@ const Dashboard = () => {
     overview,
     latest_transactions,
     isLoading,
+    isInsightsLoading,
     error,
   } = useDashboardData();
 
@@ -56,12 +57,12 @@ const Dashboard = () => {
           </h1>
         </div>
       </div>
-
+      {/* 
       {error && (
         <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
-      )}
+      )} */}
 
       <div className="mt-4 md:mt-2"></div>
 
@@ -184,7 +185,7 @@ const Dashboard = () => {
           </div>
 
           <div className="w-full xl:w-[50%] 2xl:w-full space-y-5">
-            <AIInsights insights={insights} isLoading={isLoading} />
+            <AIInsights insights={insights} isLoading={isInsightsLoading} />
 
             <div className="hidden xl:flex 2xl:hidden gap-5 w-full items-stretch">
               <div className="w-[50%] flex-1 h-full">
@@ -223,14 +224,14 @@ const Dashboard = () => {
           </div>
           <div className="md:w-[40%] lg:w-[38%] space-y-5">
             <MonthlyExpenses expenseDistribution={expenseDistribution} />
-            <AIInsights insights={insights} isLoading={isLoading} />
+            <AIInsights insights={insights} isLoading={isInsightsLoading} />
           </div>
         </div>
       </div>
 
       <div className="block md:hidden mt-6 space-y-5">
         <MonthlyExpenses expenseDistribution={expenseDistribution} />
-        <AIInsights insights={insights} isLoading={isLoading} />
+        <AIInsights insights={insights} isLoading={isInsightsLoading} />
         <MonthlyBudget
           monthlyIncome={monthlyIncome}
           monthlyExpenses={monthlyExpenses}
