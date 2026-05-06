@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronDown, FaX } from "react-icons/fa6";
+import { FaChevronDown } from "react-icons/fa6";
 
 const TransactionFilters = ({ isOpen, onClose, onApply }) => {
   const [filters, setFilters] = useState({
-    dateRange: "all",
-    category: "all",
     type: "all",
-    sortBy: "latest",
+    category: "all",
+    amountMin: 0,
+    amountMax: 1000000,
+    merchant: "all",
+    dateFrom: "",
+    dateTo: "",
   });
 
   const handleFilterChange = (key, value) => {
@@ -21,192 +24,285 @@ const TransactionFilters = ({ isOpen, onClose, onApply }) => {
 
   const handleReset = () => {
     setFilters({
-      dateRange: "all",
-      category: "all",
       type: "all",
-      sortBy: "latest",
+      category: "all",
+      amountMin: 0,
+      amountMax: 1000000,
+      merchant: "all",
+      dateFrom: "",
+      dateTo: "",
     });
   };
 
   const filterOptions = {
-    dateRange: [
-      { value: "all", label: "All Time" },
-      { value: "today", label: "Today" },
-      { value: "week", label: "This Week" },
-      { value: "month", label: "This Month" },
-      { value: "year", label: "This Year" },
-    ],
-    category: [
-      { value: "all", label: "All Categories" },
+    categories: [
+      { value: "all", label: "All" },
+      { value: "health", label: "Health & Fitness" },
+      { value: "savings", label: "Savings" },
       { value: "salary", label: "Salary" },
-      { value: "food", label: "Food & Dining" },
-      { value: "transport", label: "Transportation" },
-      { value: "entertainment", label: "Entertainment" },
-      { value: "bills", label: "Bills" },
+      { value: "food", label: "Food" },
       { value: "shopping", label: "Shopping" },
     ],
-    type: [
-      { value: "all", label: "All Types" },
+    types: [
+      { value: "all", label: "All" },
       { value: "income", label: "Income" },
       { value: "expense", label: "Expense" },
     ],
-    sortBy: [
-      { value: "latest", label: "Latest First" },
-      { value: "oldest", label: "Oldest First" },
-      { value: "highest", label: "Highest Amount" },
-      { value: "lowest", label: "Lowest Amount" },
+    merchants: [
+      { value: "all", label: "All Merchants" },
+      { value: "amazon", label: "Amazon Shopping" },
+      { value: "uber", label: "Uber" },
+      { value: "netflix", label: "Netflix" },
+      { value: "starbucks", label: "Starbucks" },
     ],
+  };
+
+  // Dual Range Slider Component
+  const DualRangeSlider = ({ min, max, valueMin, valueMax, onChange }) => {
+    const sliderRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(null); // 'min' or 'max'
+    const [currentMin, setCurrentMin] = useState(valueMin);
+    const [currentMax, setCurrentMax] = useState(valueMax);
+
+    // Update local state when props change
+    useEffect(() => {
+      setCurrentMin(valueMin);
+      setCurrentMax(valueMax);
+    }, [valueMin, valueMax]);
+
+    const handleMouseDown = (e, type) => {
+      setIsDragging(type);
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDragging || !sliderRef.current) return;
+
+      const rect = sliderRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percentage = Math.max(0, Math.min(1, x / rect.width));
+      const value = Math.round(min + (max - min) * percentage);
+
+      if (isDragging === "min") {
+        setCurrentMin(Math.min(value, currentMax));
+      } else {
+        setCurrentMax(Math.max(value, currentMin));
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(null);
+      onChange(currentMin, currentMax);
+    };
+
+    useEffect(() => {
+      if (isDragging) {
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+        return () => {
+          document.removeEventListener("mousemove", handleMouseMove);
+          document.removeEventListener("mouseup", handleMouseUp);
+        };
+      }
+    }, [isDragging, currentMin, currentMax]);
+
+    const minPercent = ((currentMin - min) / (max - min)) * 100;
+    const maxPercent = ((currentMax - min) / (max - min)) * 100;
+
+    return (
+      <div className="relative w-full">
+        <div
+          ref={sliderRef}
+          className="relative h-2 bg-gray-200 rounded-full cursor-pointer select-none"
+          onMouseDown={(e) => {
+            const rect = sliderRef.current.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = x / rect.width;
+            const value = Math.round(min + (max - min) * percentage);
+            const closerToMin =
+              Math.abs(value - valueMin) < Math.abs(value - valueMax);
+            setIsDragging(closerToMin ? "min" : "max");
+          }}
+        >
+          {/* Track */}
+          <div
+            className="absolute h-2 bg-green-600 rounded-full"
+            style={{
+              left: `${minPercent}%`,
+              width: `${maxPercent - minPercent}%`,
+            }}
+          />
+
+          {/* Min Handle */}
+          <div
+            className="absolute w-6 h-6 bg-green-600 border-2 border-white rounded-full -mt-2 shadow-md cursor-grab hover:scale-110 transition-transform"
+            style={{ left: `calc(${minPercent}% - 12px)` }}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+              handleMouseDown(e, "min");
+            }}
+          />
+
+          {/* Max Handle */}
+          <div
+            className="absolute w-6 h-6 bg-green-600 border-2 border-white rounded-full -mt-2 shadow-md cursor-grab hover:scale-110 transition-transform"
+            style={{ left: `calc(${maxPercent}% - 12px)` }}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+              handleMouseDown(e, "max");
+            }}
+          />
+        </div>
+
+        {/* Values Display */}
+        <div className="flex justify-between mt-2 text-sm text-gray-600">
+          <span>₦{currentMin.toLocaleString()}</span>
+          <span>₦{currentMax.toLocaleString()}</span>
+        </div>
+      </div>
+    );
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/70 z-[60]"
-            style={{ pointerEvents: "auto" }}
-          /> */}
-
-          {/* Filter Panel */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed  z-[70] md:absolute md:bottom-auto md:top-full right-0 md:left-auto  bg-white border border-gray-200 rounded-t-2xl md:rounded-2xl p-5 sm:p-6 w-[60%] md:w-[25%]  max-h-[90vh] overflow-y-auto md:max-h-none"
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center mb-5 sm:mb-6">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                Filters
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.97, y: 10 }}
+          transition={{ duration: 0.18 }}
+          className="w-full max-w-xl rounded-3xl bg-white border border-gray-200 shadow-xl p-5 sm:p-6 text-sm text-gray-800"
+        >
+          <div className="flex items-center justify-between gap-4 mb-5">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Filter Transactions
               </h3>
-              {/* <button
-                onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <FaX size={18} />
-              </button> */}
-              <h1 onClick={handleReset} className="text-green-600">
-                Reset
-              </h1>
             </div>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-green-600 text-sm font-semibold hover:text-green-700"
+            >
+              Reset
+            </button>
+          </div>
 
-            {/* Filters */}
-            <div className="space-y-4 sm:space-y-5">
-              {/* Date Range */}
-              {/* <div>
-                <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
-                  Date Range
-                </label>
-                <select
-                  value={filters.dateRange}
-                  onChange={(e) =>
-                    handleFilterChange("dateRange", e.target.value)
-                  }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
-                >
-                  {filterOptions.dateRange.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-
-              {/* Category */}
-              {/* <div>
-                <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
-                  Category
-                </label>
-                <select
-                  value={filters.category}
-                  onChange={(e) =>
-                    handleFilterChange("category", e.target.value)
-                  }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
-                >
-                  {filterOptions.category.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-
-              {/* Type */}
-              {/* <div>
-                <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
-                  Type
-                </label>
-                <select
-                  value={filters.type}
-                  onChange={(e) => handleFilterChange("type", e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
-                >
-                  {filterOptions.type.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-
-              {/* Sort By */}
-              {/* <div>
-                <label className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
-                  Sort By
-                </label>
-                <select
-                  value={filters.sortBy}
-                  onChange={(e) => handleFilterChange("sortBy", e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
-                >
-                  {filterOptions.sortBy.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-
-              <div>
-                <h1 className="text-xs sm:text-sm font-semibold text-gray-700 block mb-2">
-                  Transaction Type
-                </h1>
-                <div className="grid grid-flow-col auto-cols-[80px] gap-4 overflow-x-auto ">
-                  {filterOptions.type.map((option) => (
-                    <div
-                      onClick={(e) => handleFilterChange("type", option.value)}
-                      className={`${filters.type == option.value ? "border border-green-600 bg-green-600/5" : "border border-gray-400"} w-full  rounded-full p-2`}
-                    >
-                      {option.value}
-                    </div>
-                  ))}
-                </div>
+          <div className="space-y-5">
+            <div>
+              <p className="mb-3 text-[14px] font-medium ">Transaction Type</p>
+              <div className="flex flex-wrap gap-3">
+                {filterOptions.types.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleFilterChange("type", option.value)}
+                    className={`rounded-full border px-4 py-2 text-xs font-medium transition-all ${
+                      filters.type === option.value
+                        ? "border-green-600 bg-green-600/10 text-green-700"
+                        : "border-gray-300 bg-white text-gray-700 hover:border-green-300"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3 mt-6 sm:mt-8">
-              <button
-                onClick={handleReset}
-                className="flex-1 px-4 py-2 sm:py-2.5 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-xs sm:text-sm transition-all"
-              >
-                Reset
-              </button>
-              <button
-                onClick={handleApply}
-                className="flex-1 px-4 py-2 sm:py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium text-xs sm:text-sm transition-all"
-              >
-                Apply
-              </button>
+            <div>
+              <p className="mb-3 text-[14px] font-medium ">
+                Transaction Category
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {filterOptions.categories.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleFilterChange("category", option.value)}
+                    className={`rounded-full border px-4 py-2 text-xs font-medium transition-all ${
+                      filters.category === option.value
+                        ? "border-green-600 bg-green-600/10 text-green-700"
+                        : "border-gray-300 bg-white text-gray-700 hover:border-green-300"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </motion.div>
-        </>
+
+            <div>
+              <p className="mb-3 text-[14px] font-medium ">
+                Transaction Amount
+              </p>
+              <DualRangeSlider
+                min={0}
+                max={1000000}
+                valueMin={filters.amountMin}
+                valueMax={filters.amountMax}
+                onChange={(min, max) => {
+                  handleFilterChange("amountMin", min);
+                  handleFilterChange("amountMax", max);
+                }}
+              />
+            </div>
+
+            <div>
+              <label className="mb-3 text-[14px] font-medium">Merchant</label>
+              <div className="relative">
+                <select
+                  value={filters.merchant}
+                  onChange={(e) =>
+                    handleFilterChange("merchant", e.target.value)
+                  }
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[13.5px] text-gray-800 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-100"
+                >
+                  {filterOptions.merchants.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <FaChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-3 text-[14px] font-medium">
+                  Date (From)
+                </label>
+                <input
+                  type="date"
+                  value={filters.dateFrom}
+                  onChange={(e) =>
+                    handleFilterChange("dateFrom", e.target.value)
+                  }
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[13.5px] text-gray-800 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-100"
+                />
+              </div>
+
+              <div>
+                <label className="mb-3 text-[14px] font-medium">
+                  Date (To)
+                </label>
+                <input
+                  type="date"
+                  value={filters.dateTo}
+                  onChange={(e) => handleFilterChange("dateTo", e.target.value)}
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[13.5px] text-gray-800 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-100"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleApply}
+              className="w-full rounded-2xl bg-green-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
+            >
+              Apply Filter
+            </button>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

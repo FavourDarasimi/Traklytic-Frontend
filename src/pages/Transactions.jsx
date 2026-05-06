@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FaFileExport } from "react-icons/fa6";
 import TransactionHeader from "../components/Transactions/TransactionHeader";
@@ -19,7 +19,30 @@ const Transactions = () => {
     category: "all",
     type: "all",
     sortBy: "latest",
+    amountMin: 0,
+    amountMax: 500,
+    merchant: "all",
+    dateFrom: "",
+    dateTo: "",
   });
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!isFilterOpen) return;
+
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isFilterOpen]);
 
   // Sample transactions data
   const allTransactions = [
@@ -210,23 +233,25 @@ const Transactions = () => {
   return (
     <div className="w-full min-h-screen">
       <div className="space-y-6 sm:space-y-8">
-        {/* Header */}
-        <TransactionHeader
-          onAddClick={() => setIsModalOpen(true)}
-          onFilterClick={() => setIsFilterOpen(!isFilterOpen)}
-          onSearch={setSearchQuery}
-        />
-
-        {/* Filter Panel */}
-        <div className="relative">
-          <TransactionFilters
-            isOpen={isFilterOpen}
-            onClose={() => setIsFilterOpen(false)}
-            onApply={(newFilters) => {
-              setFilters(newFilters);
-              setCurrentPage(1);
-            }}
+        <div ref={containerRef} className="relative">
+          {/* Header */}
+          <TransactionHeader
+            onAddClick={() => setIsModalOpen(true)}
+            onFilterClick={() => setIsFilterOpen(!isFilterOpen)}
+            onSearch={setSearchQuery}
           />
+
+          {/* Filter Panel */}
+          <div className="absolute right-0 top-full mt-3 z-50 w-full sm:w-auto">
+            <TransactionFilters
+              isOpen={isFilterOpen}
+              onClose={() => setIsFilterOpen(false)}
+              onApply={(newFilters) => {
+                setFilters(newFilters);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
         </div>
 
         {/* Summary Stats */}
